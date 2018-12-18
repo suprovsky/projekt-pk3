@@ -1,4 +1,7 @@
 #include <iostream>
+#include "ISOfile.h"
+#include "repository.h"
+#include "md5.h"
 
 int main() {
 	std::cout << "testujemy czy github dziala" << std::endl;
