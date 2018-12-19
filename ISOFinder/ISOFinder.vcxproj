@@ -115,11 +115,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="ISOfile.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="repository.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConfigManager.h" />
     <ClInclude Include="ISOfile.h" />
     <ClInclude Include="md5.h" />
     <ClInclude Include="repository.h" />

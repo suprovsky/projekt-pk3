@@ -10,11 +10,7 @@ public:
 	repository();
 	virtual ~repository();
 private:
-	std::wstring RepoLocation;
-	std::wstring ConfigFileLocation;
 	unsigned int ISOid;
-	std::wstring GetRepoLocation();
-	std::wstring SetRepoLocation(std::wstring LocationAddress);
 	
 };
 #endif // !REPOSITORY_COKOLWIEK
