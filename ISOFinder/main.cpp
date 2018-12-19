@@ -1,6 +1,7 @@
 #include <iostream>
 #include "ISOfile.h"
 #include "repository.h"
+#include "ConfigManager.h"
 #include "md5.h"
 
 int main() {

@@ -6,6 +6,11 @@ ConfigManager::ConfigManager()
 {
 }
 
+ConfigManager::ConfigManager(std::wstring NewConfigFileLocation)
+{
+
+}
+
 
 ConfigManager::~ConfigManager()
 {

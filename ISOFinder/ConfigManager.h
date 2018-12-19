@@ -6,10 +6,14 @@ class ConfigManager :
 {
 public:
 	ConfigManager();
+	ConfigManager(std::wstring NewConfigFileLocation);
 	virtual ~ConfigManager();
+	std::wstring SetRepoLocation(std::wstring LocationAddress);
+	std::wstring GetRepoLocation();
+private:
 	std::wstring RepoLocation;
 	std::wstring ConfigFileLocation;
-	std::wstring GetRepoLocation();
-	std::wstring SetRepoLocation(std::wstring LocationAddress);
+
+
 };
 #endif

@@ -6,7 +6,7 @@ ISOfile::ISOfile()
 {
 }
 
-ISOfile::ISOfile(std::wstring NewISOlocation = "./") : ISOlocation(NewISOlocation)
+ISOfile::ISOfile(const std::wstring NewISOlocation = L"./") : ISOlocation(NewISOlocation)
 {
 }
 
