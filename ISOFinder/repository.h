@@ -1,22 +1,25 @@
 #ifndef REPOSITORY_COKOLWIEK
 #define REPOSITORY_COKOLWIEK
 
-#include <fstream>
+#include "repository.h"
 #include <iostream>
-
+#include <filesystem>
+#include <fstream>
+#include <string>
 class repository
 {
 public:
 	repository();
 	virtual ~repository();
-	repository(std::wstring NewConfigFileLocation);
-	void firstRun();
-	void SetRepoLocation(std::wstring NewLocationAddress);
-	std::wstring GetRepoLocation();
-	void SetConfigLocation(std::wstring NewConfigLocation);
+	repository(std::string NewConfigFileLocation);
+	int firstRun();
+	void SetRepoLocation(std::string NewLocationAddress);
+	std::string GetRepoLocation();
+	void SetConfigLocation(std::string NewConfigLocation);
+	int RepoSetupCall();
 private:
 	unsigned int ISOid;
-	std::wstring RepoLocation;
-	std::wstring ConfigFileLocation;
+	std::string RepoLocation;
+	std::string ConfigFileLocation;
 };
 #endif // !REPOSITORY_COKOLWIEK
