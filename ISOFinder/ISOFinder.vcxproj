@@ -84,7 +84,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -116,12 +121,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISOfile.cpp" />
+    <ClCompile Include="ISOmanager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="repository.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISOfile.h" />
+    <ClInclude Include="ISOmanager.h" />
     <ClInclude Include="md5.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="repository.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

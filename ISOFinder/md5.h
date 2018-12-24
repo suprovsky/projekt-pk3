@@ -350,7 +350,9 @@ public:
 			printf("%s can't be opened\n", filename);
 		else
 		{
+#pragma warning( disable : 4267)
 			while (len = fread(buffer, 1, 1024, file))
+#pragma warning( disable : 4267)
 				Update(buffer, len);
 			Final();
 
