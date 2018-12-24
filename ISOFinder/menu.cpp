@@ -9,16 +9,37 @@ menu::menu()
 {
 }
 
-void IsRepositorySet()
+void menu::ChangeRepoLocation(repository inputRepo)
 {
+	system("cls");
+	std::string NewLocation = "-";
+	std::cout << "The current repository location is: " << inputRepo.GetRepoLocation() << std::endl;
+	std::cout << "Please enter new repository location and press ENTER." << std::endl;
+	std::cout << "If you want to cancel repository change, please type \"cancel\" as a value and press ENTER." << std::endl;
+	std::cin >> NewLocation;
+	if (NewLocation == "cancel")
+	{
+		 OpenMain(inputRepo);
+	}
+	else
+	{
+		inputRepo.SetRepoLocation(NewLocation);
+		OpenMain(inputRepo);
+	}
+	
+}
 
+void menu::IsRepositorySet(repository inputRepo)
+{
+	std::string defaultRepoLocation = "-";
+	if (inputRepo.GetRepoLocation() == defaultRepoLocation) {
+		std::wcout << L"WARNING: repository location is not set" << std::endl << std::endl;
+	}
 }
 
 
-void GenerateMainOptions()
+void menu::GenerateMainOptions()
 {
-	system("cls");
-	_setmode(_fileno(stdout), _O_U16TEXT);
 	std::wcout << L"Welcome in ISOfinder! Choose desired operation by typing a number:" << std::endl;
 	std::wcout << L"|" << std::endl;
 	std::wcout << L"├───" << L"(1) Set new repository location" << std::endl;
@@ -31,8 +52,10 @@ void GenerateMainOptions()
 	std::wcout << L"└───" << L"(8) Exit" << std::endl;
 }
 
-void menu::OpenMain()
+void menu::OpenMain(repository inputRepo)
 {
+	system("cls");
+	IsRepositorySet(inputRepo);
 	GenerateMainOptions();
 	wchar_t c = '0';
 	int result = 0;
@@ -42,30 +65,31 @@ void menu::OpenMain()
 	result = (int)c - 48;
 	if (result == 1) {
 		c = 0;
+		ChangeRepoLocation(inputRepo);
 	}
 	else if (result == 2) {
 		c = 0;
-		SyncLocation();
+		SyncLocation(inputRepo);
 	}
 	else if (result == 3) {
 		c = 0;
-		FindISOFiles();
+		FindISOFiles(inputRepo);
 	}
 	else if (result == 4) {
 		c = 0;
-		AddISOFiles();
+		AddISOFiles(inputRepo);
 	}
 	else if (result == 5) {
 		c = 0;
-		SaveChanges();
+		SaveChanges(inputRepo);
 	}
 	else if (result == 6) {
 		c = 0;
-		Help();
+		Help(inputRepo);
 	}
 	else if (result == 7) {
 		c = 0;
-		About();
+		About(inputRepo);
 	}
 	else if (result == 8) {
 		c = 0;
@@ -73,58 +97,63 @@ void menu::OpenMain()
 	}
 }
 
-void menu::SyncLocation()
+void menu::SyncLocation(repository inputRepo)
 {
 	system("cls");
 }
 
-void menu::FindISOFiles()
+void menu::FindISOFiles(repository inputRepo)
 {
 	system("cls");
 }
 
-void menu::ThroughSystemName()
+void menu::ThroughSystemName(repository inputRepo)
 {
 	system("cls");
 }
 
-void menu::ThroughFilename()
+void menu::ThroughFilename(repository inputRepo)
 {
 	system("cls");
 }
 
-void menu::ThroughDescription()
+void menu::ThroughDescription(repository inputRepo)
 {
 	system("cls");
 }
 
-void menu::AddISOFiles()
+void menu::AddISOFiles(repository inputRepo)
 {
 	system("cls");
 }
 
-void menu::SaveChanges()
+void menu::SaveChanges(repository inputRepo)
 {
 	system("cls");
 }
 
-void menu::Help()
+void menu::Help(repository inputRepo)
 {
 	system("cls");
 	std::wcout << L"TO DO!" << std::endl << std::endl;
 	std::wcout << L"Enter any key to go back to main menu." << std::endl;
 	getch();
-	OpenMain();
+	OpenMain(inputRepo);
 }
 
-void menu::About()
+void menu::About(repository inputRepo)
 {
 	system("cls");
 	std::wcout << L"This program was made by Radosław Serba. Generally speaking it is a project for one of my subjects" << std::endl;
 	std::wcout << L"called \"computer programming\" on the Silesian University of Technology in Gliwice, Poland." << std::endl << std::endl;
+	std::wcout << L"Task description in polish:" << std::endl;
+	std::wcout << L"19.  Baza płyt z oprogramowaniem instalacyjnym" << std::endl;
+	std::wcout << L"Zadaniem programu jest zarządzanie zbiorem plików z oprogramowaniem instalacyjnym." << std::endl;
+	std::wcout << L"Zarządzanie obejmuje : przeszukiwanie zasobów, dodawanie nowych pozycji, modyfikacje" << std::endl;
+	std::wcout << L"oraz usuwanie istniejących rekordów." << std::endl << std::endl;
 	std::wcout << L"Enter any key to go back to main menu." << std::endl;
 	getch();
-	OpenMain();
+	OpenMain(inputRepo);
 }
 
 menu::~menu()
