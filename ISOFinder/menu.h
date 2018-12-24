@@ -6,16 +6,19 @@ class menu
 {
 public:
 	menu();
-	void OpenMain();
-	void SyncLocation();
-	void FindISOFiles();
-	void ThroughSystemName();
-	void ThroughFilename();
-	void ThroughDescription();
-	void AddISOFiles();
-	void SaveChanges();
-	void Help();
-	void About();
+	void ChangeRepoLocation(repository inputRepo);
+	void IsRepositorySet(repository inputRepo);
+	void GenerateMainOptions();
+	void OpenMain(repository inputRepo);
+	void SyncLocation(repository inputRepo);
+	void FindISOFiles(repository inputRepo);
+	void ThroughSystemName(repository inputRepo);
+	void ThroughFilename(repository inputRepo);
+	void ThroughDescription(repository inputRepo);
+	void AddISOFiles(repository inputRepo);
+	void SaveChanges(repository inputRepo);
+	void Help(repository inputRepo);
+	void About(repository inputRepo);
 	virtual ~menu();
 };
 #endif

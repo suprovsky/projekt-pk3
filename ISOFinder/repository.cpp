@@ -5,16 +5,12 @@
 #include <string>
 
 
-repository::repository()
+repository::repository() : RepoLocation("-")
 {
 }
 
 
 repository::~repository()
-{
-}
-
-repository::repository(std::string NewConfigFileLocation)
 {
 }
 
@@ -53,15 +49,12 @@ int repository::firstRun()
 
 void repository::SetRepoLocation(std::string NewLocationAddress)
 {
+	RepoLocation = NewLocationAddress;
 }
 
 std::string repository::GetRepoLocation()
 {
-	return std::string();
-}
-
-void repository::SetConfigLocation(std::string NewConfigLocation)
-{
+	return RepoLocation;
 }
 
 int repository::RepoSetupCall()
