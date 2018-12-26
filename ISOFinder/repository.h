@@ -12,11 +12,11 @@ public:
 	repository();
 	virtual ~repository();
 	int firstRun();
-	void SetRepoLocation(std::string NewLocationAddress);
-	std::string GetRepoLocation();
+	void SetRepoLocation(std::wstring NewLocationAddress);
+	std::wstring GetRepoLocation();
 	int RepoSetupCall();
 private:
 	unsigned int ISOid;
-	std::string RepoLocation;
+	std::wstring RepoLocation;
 };
 #endif // !REPOSITORY_COKOLWIEK

@@ -30,12 +30,13 @@ void clearConsole() {
 void menu::ChangeRepoLocation(repository& inputRepo)
 {
 	clearConsole();
-	std::string NewLocation = "-";
-	std::cout << "The current repository location is: " << inputRepo.GetRepoLocation() << std::endl;
-	std::cout << "Please enter new repository location and press ENTER." << std::endl;
-	std::cout << "If you want to cancel repository change, please type \"cancel\" as a value and press ENTER." << std::endl;
-	std::cin >> NewLocation;
-	if (!(NewLocation == "cancel"))
+	SetConsoleTitle(TEXT("ISOfinder - set new repository location"));
+	std::wstring NewLocation = L"-";
+	std::wcout << L"The current repository location is: " << inputRepo.GetRepoLocation() << std::endl;
+	std::wcout << L"Please enter new repository location and press ENTER." << std::endl;
+	std::wcout << L"If you want to cancel repository change, please type \"cancel\" as a value and press ENTER." << std::endl;
+	std::wcin >> NewLocation;
+	if (!(NewLocation == L"cancel"))
 	{
 		inputRepo.SetRepoLocation(NewLocation);
 	}
@@ -43,7 +44,7 @@ void menu::ChangeRepoLocation(repository& inputRepo)
 
 void menu::IsRepositorySet(repository& inputRepo)
 {
-	std::string defaultRepoLocation = "-";
+	std::wstring defaultRepoLocation = L"-";
 	if (inputRepo.GetRepoLocation() == defaultRepoLocation) {
 		std::wcout << L"WARNING: repository location is not set" << std::endl << std::endl;
 	}
@@ -52,6 +53,7 @@ void menu::IsRepositorySet(repository& inputRepo)
 
 void menu::GenerateMainOptions()
 {
+	SetConsoleTitle(TEXT("ISOfinder - main menu"));
 	std::wcout << L"Welcome in ISOfinder! Choose desired operation by typing a number:" << std::endl;
 	std::wcout << L"|" << std::endl;
 	std::wcout << L"├───" << L"(1) Set new repository location" << std::endl;
@@ -107,49 +109,58 @@ void menu::OpenMain()
 
 void menu::SyncLocation()
 {
+	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
 void menu::FindISOFiles()
 {
+	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
 void menu::ThroughSystemName()
 {
+	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
 void menu::ThroughFilename()
 {
+	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
 void menu::ThroughDescription()
 {
+	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
 void menu::AddISOFiles()
 {
+	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
 void menu::SaveChanges()
 {
+	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
 void menu::Help()
 {
+	SetConsoleTitle(TEXT("ISOfinder = help"));
 	clearConsole();
 	std::wcout << L"TO DO!" << std::endl << std::endl;
-	std::wcout << L"Enter any key to go back to main menu." << std::endl;
+	std::wcout << L"Press any key to go back to main menu." << std::endl;
 	getch();
 }
 
 void menu::About()
 {
+	SetConsoleTitle(TEXT("ISOfinder - about the project"));
 	clearConsole();
 	std::wcout << L"This program was made by Radosław Serba. Generally speaking it is a project for one of my subjects" << std::endl;
 	std::wcout << L"called \"computer programming\" on the Silesian University of Technology in Gliwice, Poland." << std::endl << std::endl;
@@ -158,7 +169,7 @@ void menu::About()
 	std::wcout << L"Zadaniem programu jest zarządzanie zbiorem plików z oprogramowaniem instalacyjnym." << std::endl;
 	std::wcout << L"Zarządzanie obejmuje : przeszukiwanie zasobów, dodawanie nowych pozycji, modyfikacje" << std::endl;
 	std::wcout << L"oraz usuwanie istniejących rekordów." << std::endl << std::endl;
-	std::wcout << L"Enter any key to go back to main menu." << std::endl;
+	std::wcout << L"Press any key to go back to main menu." << std::endl;
 	getch();
 }
 
