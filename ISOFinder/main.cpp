@@ -10,14 +10,14 @@
 #include <fcntl.h>
 #include <string>
 #include <filesystem>
+#include <conio.h>
 
 int main()
 {
-	SetConsoleTitle(TEXT("ISOfinder"));
 	_setmode(_fileno(stdout), _O_U16TEXT);
 	repository repo;
 	repo.firstRun();
-	menu NewMenu;
-	NewMenu.OpenMain(repo);
+	menu NewMenu(repo);
+	NewMenu.OpenMain();
 	return 0;
 }
