@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
-
+#include "menu.h"
 
 repository::repository() : RepoLocation("-")
 {
@@ -31,7 +31,7 @@ int repository::firstRun()
 			std::cout << path << std::endl << std::endl;
 			std::cout << "Click ENTER to continue.";
 			std::cin.get();
-			system("cls");
+			clearConsole();
 			return 0;
 		}
 		else
@@ -41,7 +41,7 @@ int repository::firstRun()
 			std::cerr << "Please check if you are authorised to create a file in this directory.";
 			std::cout << std::endl << std::endl << "Click ENTER to continue.";
 			std::cin.get();
-			system("cls");
+			clearConsole();
 			return 1;
 		}
 	}

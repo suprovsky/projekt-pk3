@@ -5,28 +5,40 @@
 #include <io.h>
 #include <fcntl.h>
 #include <conio.h>
-menu::menu()
+
+menu::menu(repository inputRepo)
 {
+}
+
+void clearConsole() {
+	COORD topLeft = { 0, 0 };
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO screen;
+	DWORD written;
+
+	GetConsoleScreenBufferInfo(console, &screen);
+	FillConsoleOutputCharacterA(
+		console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written
+	);
+	FillConsoleOutputAttribute(
+		console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE,
+		screen.dwSize.X * screen.dwSize.Y, topLeft, &written
+	);
+	SetConsoleCursorPosition(console, topLeft);
 }
 
 void menu::ChangeRepoLocation(repository inputRepo)
 {
-	system("cls");
+	clearConsole();
 	std::string NewLocation = "-";
 	std::cout << "The current repository location is: " << inputRepo.GetRepoLocation() << std::endl;
 	std::cout << "Please enter new repository location and press ENTER." << std::endl;
 	std::cout << "If you want to cancel repository change, please type \"cancel\" as a value and press ENTER." << std::endl;
 	std::cin >> NewLocation;
-	if (NewLocation == "cancel")
-	{
-		 OpenMain(inputRepo);
-	}
-	else
+	if (!(NewLocation == "cancel"))
 	{
 		inputRepo.SetRepoLocation(NewLocation);
-		OpenMain(inputRepo);
 	}
-	
 }
 
 void menu::IsRepositorySet(repository inputRepo)
@@ -52,98 +64,93 @@ void menu::GenerateMainOptions()
 	std::wcout << L"└───" << L"(8) Exit" << std::endl;
 }
 
-void menu::OpenMain(repository inputRepo)
+void menu::OpenMain()
 {
-	system("cls");
-	IsRepositorySet(inputRepo);
-	GenerateMainOptions();
-	wchar_t c = '0';
-	int result = 0;
-	do {
-		c = getch();
-	} while ((c != 49 && c != 50 && c != 51 && c != 52 && c != 53 && c != 54 && c != 55 && c != 56));
-	result = (int)c - 48;
-	if (result == 1) {
-		c = 0;
-		ChangeRepoLocation(inputRepo);
-	}
-	else if (result == 2) {
-		c = 0;
-		SyncLocation(inputRepo);
-	}
-	else if (result == 3) {
-		c = 0;
-		FindISOFiles(inputRepo);
-	}
-	else if (result == 4) {
-		c = 0;
-		AddISOFiles(inputRepo);
-	}
-	else if (result == 5) {
-		c = 0;
-		SaveChanges(inputRepo);
-	}
-	else if (result == 6) {
-		c = 0;
-		Help(inputRepo);
-	}
-	else if (result == 7) {
-		c = 0;
-		About(inputRepo);
-	}
-	else if (result == 8) {
-		c = 0;
-		exit(0);
-	}
+	wchar_t selectedOption = '0';
+	do 
+	{
+		IsRepositorySet(actualRepo);
+		clearConsole();
+		GenerateMainOptions();
+		selectedOption = getch();
+		switch (selectedOption)
+		{
+		case '1':
+			ChangeRepoLocation(actualRepo);
+			break;
+		case '2':
+			SyncLocation();
+			break;
+		case '3':
+			FindISOFiles();
+			break;
+		case '4':
+			AddISOFiles();
+			break;
+		case '5':
+			SaveChanges();
+			break;
+		case '6':
+			Help();
+			break;
+		case '7':
+			About();
+			break;
+		case '8':
+			exit(0);
+			break;
+		default:
+			break;
+		}
+	} while (selectedOption != '0');
 }
 
-void menu::SyncLocation(repository inputRepo)
+void menu::SyncLocation()
 {
-	system("cls");
+	clearConsole();
 }
 
-void menu::FindISOFiles(repository inputRepo)
+void menu::FindISOFiles()
 {
-	system("cls");
+	clearConsole();
 }
 
-void menu::ThroughSystemName(repository inputRepo)
+void menu::ThroughSystemName()
 {
-	system("cls");
+	clearConsole();
 }
 
-void menu::ThroughFilename(repository inputRepo)
+void menu::ThroughFilename()
 {
-	system("cls");
+	clearConsole();
 }
 
-void menu::ThroughDescription(repository inputRepo)
+void menu::ThroughDescription()
 {
-	system("cls");
+	clearConsole();
 }
 
-void menu::AddISOFiles(repository inputRepo)
+void menu::AddISOFiles()
 {
-	system("cls");
+	clearConsole();
 }
 
-void menu::SaveChanges(repository inputRepo)
+void menu::SaveChanges()
 {
-	system("cls");
+	clearConsole();
 }
 
-void menu::Help(repository inputRepo)
+void menu::Help()
 {
-	system("cls");
+	clearConsole();
 	std::wcout << L"TO DO!" << std::endl << std::endl;
 	std::wcout << L"Enter any key to go back to main menu." << std::endl;
 	getch();
-	OpenMain(inputRepo);
 }
 
-void menu::About(repository inputRepo)
+void menu::About()
 {
-	system("cls");
+	clearConsole();
 	std::wcout << L"This program was made by Radosław Serba. Generally speaking it is a project for one of my subjects" << std::endl;
 	std::wcout << L"called \"computer programming\" on the Silesian University of Technology in Gliwice, Poland." << std::endl << std::endl;
 	std::wcout << L"Task description in polish:" << std::endl;
@@ -153,7 +160,6 @@ void menu::About(repository inputRepo)
 	std::wcout << L"oraz usuwanie istniejących rekordów." << std::endl << std::endl;
 	std::wcout << L"Enter any key to go back to main menu." << std::endl;
 	getch();
-	OpenMain(inputRepo);
 }
 
 menu::~menu()
