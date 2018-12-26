@@ -6,7 +6,7 @@
 #include <fcntl.h>
 #include <conio.h>
 
-menu::menu(repository inputRepo)
+menu::menu(repository& inputRepo) : actualRepo(inputRepo)
 {
 }
 
@@ -27,7 +27,7 @@ void clearConsole() {
 	SetConsoleCursorPosition(console, topLeft);
 }
 
-void menu::ChangeRepoLocation(repository inputRepo)
+void menu::ChangeRepoLocation(repository& inputRepo)
 {
 	clearConsole();
 	std::string NewLocation = "-";
@@ -41,7 +41,7 @@ void menu::ChangeRepoLocation(repository inputRepo)
 	}
 }
 
-void menu::IsRepositorySet(repository inputRepo)
+void menu::IsRepositorySet(repository& inputRepo)
 {
 	std::string defaultRepoLocation = "-";
 	if (inputRepo.GetRepoLocation() == defaultRepoLocation) {

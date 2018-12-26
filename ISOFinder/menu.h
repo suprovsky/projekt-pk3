@@ -6,9 +6,9 @@ void clearConsole();
 class menu
 {
 public:
-	menu(repository startRepo);
-	void ChangeRepoLocation(repository inputRepo);
-	void IsRepositorySet(repository inputRepo);
+	menu(repository& startRepo);
+	void ChangeRepoLocation(repository& inputRepo);
+	void IsRepositorySet(repository& inputRepo);
 	void GenerateMainOptions();
 	void OpenMain();
 	void SyncLocation();
@@ -22,6 +22,6 @@ public:
 	void About();
 	virtual ~menu();
 private:
-	repository actualRepo;
+	repository& actualRepo;
 };
 #endif
