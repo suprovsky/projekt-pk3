@@ -50,7 +50,6 @@ int repository::firstRun()
 		return 2;
 	}
 }
-
 void repository::SetRepoLocation(std::wstring NewLocationAddress)
 {
 	RepoLocation = NewLocationAddress;

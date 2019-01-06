@@ -10,58 +10,52 @@ ISOfile::ISOfile(const std::wstring NewISOlocation = L"./") : ISOlocation(NewISO
 {
 }
 
-ISOfile::ISOfile(std::string SomeISOdata)
-{
-}
-
 
 ISOfile::~ISOfile()
 {
 }
 
-std::string ISOfile::SetISOname(std::string NewISOname)
+void ISOfile::SetISOname(std::wstring NewISOname)
 {
-	return std::string();
+	ISOname = NewISOname;
 }
 
-std::string ISOfile::GetISOname()
+std::wstring ISOfile::GetISOname()
 {
-	return std::string();
+	return ISOname;
 }
 
-std::string ISOfile::SetISOfilename(std::string NewISOfilename)
+void ISOfile::SetISOfilename(std::wstring NewISOfilename)
 {
-	return std::string();
+	ISOfilename = NewISOfilename;
 }
 
-std::string ISOfile::GetISOfilename()
+std::wstring ISOfile::GetISOfilename()
 {
-	return std::string();
+	return ISOfilename;
 }
 
-std::string ISOfile::SetISOdesc(std::string NewISOdesc)
+void ISOfile::SetISOdesc(std::wstring NewISOdesc)
 {
-	return std::string();
+	ISOdescription = NewISOdesc;
 }
 
-std::string ISOfile::GetISOdesc()
+std::wstring ISOfile::GetISOdesc()
 {
-	return std::string();
+	return ISOdescription;
 }
 
-std::string ISOfile::SetMD5check(std::string NewMD5check)
+void ISOfile::SetMD5check(std::wstring NewMD5check)
 {
-	return std::string();
 }
 
-std::string ISOfile::GetMD5check()
-{
-	return std::string();
-}
-
-std::wstring ISOfile::SetISOlocation(std::wstring NewISOlocation)
+std::wstring ISOfile::GetMD5check()
 {
 	return std::wstring();
+}
+
+void ISOfile::SetISOlocation(std::wstring NewISOlocation)
+{
 }
 
 std::wstring ISOfile::GetISOlocation()

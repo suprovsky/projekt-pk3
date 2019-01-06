@@ -12,23 +12,22 @@ class ISOfile :
 public:
 	ISOfile();
 	ISOfile(std::wstring NewISOlocation);
-	ISOfile(std::string SomeISOdata);
 	virtual ~ISOfile();
-	std::string SetISOname(std::string NewISOname);
-	std::string GetISOname();
-	std::string SetISOfilename(std::string NewISOfilename);
-	std::string GetISOfilename();
-	std::string SetISOdesc(std::string NewISOdesc);
-	std::string GetISOdesc();
-	std::string SetMD5check(std::string NewMD5check);
-	std::string GetMD5check();
-	std::wstring SetISOlocation(std::wstring NewISOlocation);
+	void SetISOname(std::wstring NewISOname);
+	std::wstring GetISOname();
+	void SetISOfilename(std::wstring NewISOfilename);
+	std::wstring GetISOfilename();
+	void SetISOdesc(std::wstring NewISOdesc);
+	std::wstring GetISOdesc();
+	void SetMD5check(std::wstring NewMD5check);
+	std::wstring GetMD5check();
+	void SetISOlocation(std::wstring NewISOlocation);
 	std::wstring GetISOlocation();
 private:
-	std::string ISOname;
-	std::string ISOfilename;
-	std::string ISOdescription;
-	std::string MD5checksum;
+	std::wstring ISOname;
+	std::wstring ISOfilename;
+	std::wstring ISOdescription;
+	std::wstring MD5checksum;
 	std::wstring ISOlocation;
 	//auto ISOmodificationTime;
 

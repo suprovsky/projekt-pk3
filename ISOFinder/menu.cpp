@@ -10,7 +10,7 @@ menu::menu(repository& inputRepo) : actualRepo(inputRepo)
 {
 }
 
-void clearConsole() {
+void menu::clearConsole() {
 	COORD topLeft = { 0, 0 };
 	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO screen;

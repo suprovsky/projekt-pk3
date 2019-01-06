@@ -2,11 +2,11 @@
 #define MENU_COKOLWIEK
 #include <iostream>
 #include "repository.h"
-void clearConsole();
 class menu
 {
 public:
 	menu(repository& startRepo);
+	static void clearConsole();
 	void ChangeRepoLocation(repository& inputRepo);
 	void IsRepositorySet(repository& inputRepo);
 	void GenerateMainOptions();
