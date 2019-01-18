@@ -6,11 +6,11 @@
 #include <fcntl.h>
 #include <conio.h>
 
-menu::menu(repository& inputRepo) : actualRepo(inputRepo)
+Menu::Menu(repository& inputRepo) : actualRepo(inputRepo)
 {
 }
 
-void menu::clearConsole() {
+void Menu::clearConsole() {
 	COORD topLeft = { 0, 0 };
 	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO screen;
@@ -27,7 +27,7 @@ void menu::clearConsole() {
 	SetConsoleCursorPosition(console, topLeft);
 }
 
-void menu::ChangeRepoLocation(repository& inputRepo)
+void Menu::ChangeRepoLocation(repository& inputRepo)
 {
 	clearConsole();
 	SetConsoleTitle(TEXT("ISOfinder - set new repository location"));
@@ -39,10 +39,20 @@ void menu::ChangeRepoLocation(repository& inputRepo)
 	if (!(NewLocation == L"cancel"))
 	{
 		inputRepo.SetRepoLocation(NewLocation);
+		std::wstring path;
+		std::wofstream file;
+		path = _wgetenv(L"appdata");
+		path += L"\\ISOfinder.cfg";
+		file.open(path.c_str(), std::ios::out | std::ios::trunc);
+		if (file.is_open())
+		{
+			file << inputRepo.GetRepoLocation();
+			file.close();
+		}
 	}
 }
 
-void menu::IsRepositorySet(repository& inputRepo)
+void Menu::IsRepositorySet(repository& inputRepo)
 {
 	std::wstring defaultRepoLocation = L"-";
 	if (inputRepo.GetRepoLocation() == defaultRepoLocation) {
@@ -51,7 +61,7 @@ void menu::IsRepositorySet(repository& inputRepo)
 }
 
 
-void menu::GenerateMainOptions()
+void Menu::GenerateMainOptions()
 {
 	SetConsoleTitle(TEXT("ISOfinder - main menu"));
 	std::wcout << L"Welcome in ISOfinder! Choose desired operation by typing a number:" << std::endl;
@@ -66,13 +76,13 @@ void menu::GenerateMainOptions()
 	std::wcout << L"└───" << L"(8) Exit" << std::endl;
 }
 
-void menu::OpenMain()
+void Menu::OpenMain()
 {
 	wchar_t selectedOption = '0';
 	do 
 	{
-		IsRepositorySet(actualRepo);
 		clearConsole();
+		IsRepositorySet(actualRepo);
 		GenerateMainOptions();
 		selectedOption = getch();
 		switch (selectedOption)
@@ -107,49 +117,49 @@ void menu::OpenMain()
 	} while (selectedOption != '0');
 }
 
-void menu::SyncLocation()
+void Menu::SyncLocation()
 {
 	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
-void menu::FindISOFiles()
+void Menu::FindISOFiles()
 {
 	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
-void menu::ThroughSystemName()
+void Menu::ThroughSystemName()
 {
 	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
-void menu::ThroughFilename()
+void Menu::ThroughFilename()
 {
 	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
-void menu::ThroughDescription()
+void Menu::ThroughDescription()
 {
 	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
-void menu::AddISOFiles()
+void Menu::AddISOFiles()
 {
 	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
-void menu::SaveChanges()
+void Menu::SaveChanges()
 {
 	SetConsoleTitle(TEXT("ISOfinder"));
 	clearConsole();
 }
 
-void menu::Help()
+void Menu::Help()
 {
 	SetConsoleTitle(TEXT("ISOfinder = help"));
 	clearConsole();
@@ -158,7 +168,7 @@ void menu::Help()
 	getch();
 }
 
-void menu::About()
+void Menu::About()
 {
 	SetConsoleTitle(TEXT("ISOfinder - about the project"));
 	clearConsole();
@@ -173,6 +183,6 @@ void menu::About()
 	getch();
 }
 
-menu::~menu()
+Menu::~Menu()
 {
 }

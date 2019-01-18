@@ -2,10 +2,10 @@
 #define MENU_COKOLWIEK
 #include <iostream>
 #include "repository.h"
-class menu
+class Menu
 {
 public:
-	menu(repository& startRepo);
+	Menu(repository& startRepo);
 	static void clearConsole();
 	void ChangeRepoLocation(repository& inputRepo);
 	void IsRepositorySet(repository& inputRepo);
@@ -20,7 +20,7 @@ public:
 	void SaveChanges();
 	void Help();
 	void About();
-	virtual ~menu();
+	virtual ~Menu();
 private:
 	repository& actualRepo;
 };

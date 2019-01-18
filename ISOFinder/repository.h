@@ -14,7 +14,7 @@ public:
 	int firstRun();
 	void SetRepoLocation(std::wstring NewLocationAddress);
 	std::wstring GetRepoLocation();
-	int RepoSetupCall();
+	void RepoStartup();
 private:
 	unsigned int ISOid;
 	std::wstring RepoLocation;

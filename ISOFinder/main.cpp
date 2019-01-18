@@ -16,8 +16,8 @@ int main()
 {
 	_setmode(_fileno(stdout), _O_U16TEXT);
 	repository repo;
-	repo.firstRun();
-	menu NewMenu(repo);
+	repo.RepoStartup();
+	Menu NewMenu(repo);
 	NewMenu.OpenMain();
 	return 0;
 }
