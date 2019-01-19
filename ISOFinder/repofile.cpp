@@ -9,8 +9,8 @@ RepoFile::RepoFile()
 
 RepoFile::RepoFile(std::wstring name, std::wstring filename, std::wstring filelock, std::wstring filedesc)
 {
-	fileName = name;
-	fileFilename = filename;
+	fileSystemName = name;
+	fileUserDefinedName = filename;
 	fileLocation = filelock;
 	fileDescription = filedesc;
 }
@@ -24,42 +24,42 @@ RepoFile::~RepoFile()
 {
 }
 
-void RepoFile::SetISOname(std::wstring NewISOname)
+void RepoFile::SetSystemName(std::wstring NewISOname)
 {
-	fileName = NewISOname;
+	fileSystemName = NewISOname;
 }
 
-std::wstring RepoFile::GetISOname()
+std::wstring RepoFile::GetSystemName()
 {
-	return fileName;
+	return fileSystemName;
 }
 
-void RepoFile::SetISOfilename(std::wstring NewISOfilename)
+void RepoFile::SetUserDefinedName(std::wstring NewISOfilename)
 {
-	fileFilename = NewISOfilename;
+	fileUserDefinedName = NewISOfilename;
 }
 
-std::wstring RepoFile::GetISOfilename()
+std::wstring RepoFile::GetUserDefinedName()
 {
-	return fileFilename;
+	return fileUserDefinedName;
 }
 
-void RepoFile::SetISOdesc(std::wstring NewISOdesc)
+void RepoFile::SetFileDesc(std::wstring NewISOdesc)
 {
 	fileDescription = NewISOdesc;
 }
 
-std::wstring RepoFile::GetISOdesc()
+std::wstring RepoFile::GetFileDesc()
 {
 	return fileDescription;
 }
 
-void RepoFile::SetISOlocation(std::wstring NewISOlocation)
+void RepoFile::SetFileLocation(std::wstring NewISOlocation)
 {
 	fileLocation = NewISOlocation;
 }
 
-std::wstring RepoFile::GetISOlocation()
+std::wstring RepoFile::GetFileLocation()
 {
 	return fileLocation;
 }
@@ -67,8 +67,15 @@ std::wstring RepoFile::GetISOlocation()
 RepoFile & RepoFile::operator=(RepoFile & right)
 {
 	this->fileDescription = right.fileDescription;
-	this->fileFilename = right.fileFilename;
+	this->fileUserDefinedName = right.fileUserDefinedName;
 	this->fileLocation = right.fileLocation;
-	this->fileName = right.fileName;
+	this->fileSystemName = right.fileSystemName;
 	return *this;
+}
+
+std::wostream & operator<<(std::wostream & output, RepoFile & right)
+{
+	output << L"System file name: " << right.fileSystemName << std::endl << L"Description: " << right.fileDescription << std::endl;
+	output << L"User defined file name: " << right.fileUserDefinedName << std::endl << L"Location: " << right.fileLocation << std::endl;
+	return output;
 }

@@ -7,7 +7,7 @@
 
 Repository::Repository()
 {
-	RepoLocation = L"";
+	RepoLocation = L"-";
 }
 
 
@@ -20,11 +20,11 @@ int Repository::firstRun()
 	std::wstring path;
 	std::wofstream file;
 	path = _wgetenv(L"appdata");
-	path += L"\\ISOfinder.cfg";
+	path += L"\\FileFinder.cfg";
 	file.open(path.c_str(), std::ios::out | std::ios::trunc);
 	if (file.is_open())
 	{
-		std::wcout << L"This is the first run of ISOFinder. ";
+		std::wcout << L"This is the first run of FileFinder. ";
 		std::wcout << L"The configuration file will be created in:" << std::endl;
 		std::wcout << path << std::endl << std::endl;
 		std::wcout << L"Click ENTER to continue.";
@@ -35,7 +35,7 @@ int Repository::firstRun()
 	}
 	else
 	{
-		std::wcerr << L"ERROR: file ISOfinder.dat could not be created in: " << std::endl;
+		std::wcerr << L"ERROR: file FileFinder.cfg could not be created in: " << std::endl;
 		std::wcerr << path << std::endl;
 		std::wcerr << L"Please check if you are authorised to create a file in this directory.";
 		std::wcout << std::endl << std::endl << L"Click ENTER to continue.";
@@ -59,7 +59,7 @@ void Repository::RepoStartup()
 	std::wstring path;
 	std::wifstream file;
 	path = _wgetenv(L"appdata");
-	path += L"\\ISOfinder.cfg";
+	path += L"\\FileFinder.cfg";
 	file.open(path.c_str(), std::ios::in);
 	if (file.is_open())
 	{

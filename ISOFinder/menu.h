@@ -11,13 +11,16 @@ public:
 	void ChangeRepoLocation(Repository& inputRepo);
 	void IsRepositorySet(Repository& inputRepo);
 	void GenerateMainOptions();
+	void GenerateSearchOptions();
 	void OpenMain();
 	void ShowAllFiles();
-	void FindISOFiles();
+	void FindRepoFiles();
 	void ThroughSystemName();
-	void ThroughFilename();
+	void ThroughUserDefinedName();
 	void ThroughDescription();
+	void ThroughLocation();
 	void AddRepoFiles();
+	void DeleteRepoFiles();
 	void SaveChanges();
 	void Help();
 	void About();

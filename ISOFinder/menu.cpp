@@ -44,7 +44,7 @@ void Menu::ChangeRepoLocation(Repository& inputRepo)
 		std::wstring path;
 		std::wofstream file;
 		path = _wgetenv(L"appdata");
-		path += L"\\ISOfinder.cfg";
+		path += L"\\FileFinder.cfg";
 		file.open(path.c_str(), std::ios::out | std::ios::trunc);
 		if (file.is_open())
 		{
@@ -71,11 +71,24 @@ void Menu::GenerateMainOptions()
 	std::wcout << L"├───" << L"(1) Set new repository location" << std::endl;
 	std::wcout << L"├───" << L"(2) Show all files in repository" << std::endl;
 	std::wcout << L"├───" << L"(3) Find specified Repo file" << std::endl;
-	std::wcout << L"├───" << L"(4) Add Repo files manually" << std::endl;
-	std::wcout << L"├───" << L"(5) Save changes into repository" << std::endl;
-	std::wcout << L"├───" << L"(6) Help" << std::endl;
-	std::wcout << L"├───" << L"(7) About the project" << std::endl;
-	std::wcout << L"└───" << L"(8) Exit" << std::endl;
+	std::wcout << L"├───" << L"(4) Add Repo file" << std::endl;
+	std::wcout << L"├───" << L"(5) Delete Repo file" << std::endl;
+	std::wcout << L"├───" << L"(6) Save changes into repository" << std::endl;
+	std::wcout << L"├───" << L"(7) Help" << std::endl;
+	std::wcout << L"├───" << L"(8) About the project" << std::endl;
+	std::wcout << L"└───" << L"(9) Exit" << std::endl;
+}
+
+void Menu::GenerateSearchOptions()
+{
+	SetConsoleTitle(TEXT("RepoFinder - how do you want to find files?"));
+	std::wcout << L"How do you want to find files?" << std::endl;
+	std::wcout << L"|" << std::endl;
+	std::wcout << L"├───" << L"(1) Through system file name" << std::endl;
+	std::wcout << L"├───" << L"(2) Through description" << std::endl;
+	std::wcout << L"├───" << L"(3) Through user defined file name" << std::endl;
+	std::wcout << L"├───" << L"(4) Through file location" << std::endl;
+	std::wcout << L"└───" << L"(5) Go back to the main menu" << std::endl;
 }
 
 void Menu::OpenMain()
@@ -96,21 +109,24 @@ void Menu::OpenMain()
 			ShowAllFiles();
 			break;
 		case '3':
-			FindISOFiles();
+			FindRepoFiles();
 			break;
 		case '4':
 			AddRepoFiles();
 			break;
 		case '5':
-			SaveChanges();
+			DeleteRepoFiles();
 			break;
 		case '6':
-			Help();
+			SaveChanges();
 			break;
 		case '7':
-			About();
+			Help();
 			break;
 		case '8':
+			About();
+			break;
+		case '9':
 			exit(0);
 			break;
 		default:
@@ -121,36 +137,100 @@ void Menu::OpenMain()
 
 void Menu::ShowAllFiles()
 {
-	SetConsoleTitle(TEXT("RepoFinder"));
+	SetConsoleTitle(TEXT("RepoFinder - show all files in the repository"));
 	clearConsole();
-	std::wcout << "This is an actual list of files in the repository:" << std::endl;
+	std::wcout << L"This is an actual list of files in the repository:" << std::endl;
 	actualManager.ShowAllFiles();
-	std::wcout << "Press any key to back to main menu.";
+	std::wcout << L"Press any key to back to main menu.";
 	getch();
 }
 
-void Menu::FindISOFiles()
+void Menu::FindRepoFiles()
 {
-	SetConsoleTitle(TEXT("RepoFinder"));
-	clearConsole();
+	wchar_t selectedOption = '0';
+	do
+	{
+		clearConsole();
+		IsRepositorySet(actualRepo);
+		GenerateSearchOptions();
+		selectedOption = getch();
+		switch (selectedOption)
+		{
+		case '1':
+			ThroughSystemName();
+			break;
+		case '2':
+			ThroughDescription();
+			break;
+		case '3':
+			ThroughUserDefinedName();
+			break;
+		case '4':
+			ThroughLocation();
+			break;
+		case '5':
+			OpenMain();
+			break;
+		default:
+			break;
+		}
+	} while (selectedOption != '0');
 }
 
 void Menu::ThroughSystemName()
 {
-	SetConsoleTitle(TEXT("RepoFinder"));
+	SetConsoleTitle(TEXT("RepoFinder - find files through its system name"));
 	clearConsole();
+	std::wstring searchPhrase;
+	std::wcout << L"Please enter specified file system name to search: ";
+	std::wcin >> searchPhrase;
+	clearConsole();
+	std::wcout << L"The results are: " << std::endl;
+	actualManager.FindInRepoBySystemName(searchPhrase);
+	std::wcout << std::endl << L"Please enter any key to continue.";
+	getch();
 }
 
-void Menu::ThroughFilename()
+void Menu::ThroughUserDefinedName()
 {
-	SetConsoleTitle(TEXT("RepoFinder"));
+	SetConsoleTitle(TEXT("RepoFinder - find files through its user defined name"));
 	clearConsole();
+	std::wstring searchPhrase;
+	std::wcout << L"Please enter specified user defined name to search: ";
+	std::wcin >> searchPhrase;
+	clearConsole();
+	std::wcout << L"The results are: " << std::endl;
+	actualManager.FindInRepoByUserDefinedName(searchPhrase);
+	std::wcout << std::endl << L"Please enter any key to continue.";
+	getch();
 }
 
 void Menu::ThroughDescription()
 {
-	SetConsoleTitle(TEXT("RepoFinder"));
+	SetConsoleTitle(TEXT("RepoFinder - find files through its description"));
 	clearConsole();
+	std::wstring searchPhrase;
+	std::wcout << L"Please enter specified file description to search: ";
+	std::wcin >> searchPhrase;
+	clearConsole();
+	std::wcout << L"The results are: " << std::endl;
+	actualManager.FindInRepoByDesc(searchPhrase);
+	std::wcout << std::endl << L"Please enter any key to continue.";
+	getch();
+}
+
+void Menu::ThroughLocation()
+{
+	SetConsoleTitle(TEXT("RepoFinder - find files through its location"));
+	clearConsole();
+	std::wstring searchPhrase;
+	std::wcout << L"Please enter specified file location to search: ";
+	std::wcin >> searchPhrase;
+	clearConsole();
+	std::wcout << L"The results are: " << std::endl;
+	actualManager.FindInRepoByLocation(searchPhrase);
+	std::wcout << std::endl << L"Please enter any key to continue.";
+	getch();
 }
 
 void Menu::AddRepoFiles()
@@ -169,25 +249,39 @@ void Menu::AddRepoFiles()
 	RepoFile newPosition(fName, fDesc, fFilename, fLocation);
 	actualManager.AddToRepo(newPosition);
 	clearConsole();
-	std::wcout << L"New file added: " << fFilename << std::endl;
-	std::wcout << L"File description: " << fDesc << std::endl;
-	std::wcout << L"Full filename: " << fName << std::endl;
-	std::wcout << L"File location: " << fLocation << std::endl;
+	std::wcout << L"You have added a new file with following data: " << std::endl;
+	std::wcout << newPosition << std::endl;
 	std::wcout << L"Press anything to continue.";
 	getch();
+}
+
+void Menu::DeleteRepoFiles()
+{
+
 }
 
 void Menu::SaveChanges()
 {
 	SetConsoleTitle(TEXT("RepoFinder"));
 	clearConsole();
+	bool saveResult = actualManager.RepoSaveToFile();
+	if (saveResult)
+	{
+		std::wcout << L"Saved successfully!" << std::endl << L"Press any key to go back to the main menu.";
+	}
+	else
+	{
+		std::wcout << L"Something went wrong, save unsuccessful." << std::endl << L"Press any key to go back to the main menu.";
+	}
+	getch();
 }
 
 void Menu::Help()
 {
 	SetConsoleTitle(TEXT("RepoFinder = help"));
 	clearConsole();
-	std::wcout << L"TO DO!" << std::endl << std::endl;
+	std::wcout << L"Head over to the program documentation (SPRAWOZDANIE) to find out how all method used in the program" << std::endl;
+	std::wcout << L" works." << std::endl << std::endl;
 	std::wcout << L"Press any key to go back to main menu." << std::endl;
 	getch();
 }

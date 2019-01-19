@@ -25,36 +25,109 @@ void RepoManager::ShowAllFiles()
 {
 	for (auto x : repoList)
 	{
-		std::wcout << "File name: " << x.GetISOname() << std::endl;
-		std::wcout << "File description: " << x.GetISOdesc() << std::endl;
-		std::wcout << "Full filename: " << x.GetISOfilename() << std::endl;
-		std::wcout << "File location: " << x.GetISOlocation() << std::endl << std::endl;
+		std::wcout << x << std::endl;
 	}
 }
 
-void RepoManager::FindInRepoByName(std::wstring inputName)
+void RepoManager::FindInRepoBySystemName(std::wstring inputName)
 {
-	RepoFile findExample;
-	findExample.SetISOname(inputName);
-	//std::list<RepoFile>::iterator findIter = std::find(repoList.begin(), repoList.end(), findExample);
-	//std::wcout << "File name: " << findIter->GetISOname() << std::endl;
-	//std::wcout << "File description: " << findIter->GetISOdesc() << std::endl;
-	//std::wcout << "Full filename: " << findIter->GetISOfilename() << std::endl;
-	//std::wcout << "File location: " << findIter->GetISOlocation() << std::endl << std::endl;
+	for (auto x : repoList)
+	{
+		if (x.GetSystemName() == inputName)
+		{
+			std::wcout << x << std::endl;
+		}
+	}
 }
 
 void RepoManager::FindInRepoByDesc(std::wstring inputDesc)
 {
+	for (auto x : repoList)
+	{
+		if (x.GetFileDesc() == inputDesc)
+		{
+			std::wcout << x << std::endl;
+		}
+	}
 }
 
-void RepoManager::FindInRepoByFileName(std::wstring inputFileName)
+void RepoManager::FindInRepoByUserDefinedName(std::wstring inputUserDefinedName)
 {
+	for (auto x : repoList)
+	{
+		if (x.GetUserDefinedName() == inputUserDefinedName)
+		{
+			std::wcout << x << std::endl;
+		}
+	}
+}
+
+void RepoManager::FindInRepoByLocation(std::wstring inputLocation)
+{
+	for (auto x : repoList)
+	{
+		if (x.GetFileLocation() == inputLocation)
+		{
+			std::wcout << x << std::endl;
+		}
+	}
 }
 
 void RepoManager::RepoLoadFromFile()
 {
 }
 
-void RepoManager::RepoSaveToFile()
+bool RepoManager::RepoSaveToFile()
 {
+	return true;
+}
+
+void RepoManager::DeleteFromRepoBySystemName(std::wstring inputName)
+{
+	//std::list<RepoFile>::iterator repoIter = repoList.begin();
+	//for (auto x : repoList)
+	//{
+	//	if (x.GetSystemName() == inputName)
+	//	{
+	//		std::wcout << x << std::endl;
+	//	}
+	//}
+}
+
+void RepoManager::DeleteFromRepoByDesc(std::wstring inputDesc)
+{
+
+	//std::list<RepoFile>::iterator repoIter = repoList.begin();
+	//for (auto x : repoList)
+	//{
+	//	repoIter++;
+	//	if (x.GetFileDesc() == inputDesc)
+	//	{
+	//		std::wcout << x << std::endl;
+	//	}
+	//}
+}
+
+void RepoManager::DeleteFromRepoByUserDefinedName(std::wstring inputUserDefinedName)
+{
+	//std::list<RepoFile>::iterator repoIter = repoList.begin();
+	//for (auto x : repoList)
+	//{
+	//	if (x.GetUserDefinedName() == inputUserDefinedName)
+	//	{
+	//		std::wcout << x << std::endl;
+	//	}
+	//}
+}
+
+void RepoManager::DeleteFromRepoByLocation(std::wstring inputLocation)
+{
+	//std::list<RepoFile>::iterator repoIter = repoList.begin();
+	//for (auto x : repoList)
+	//{
+	//	if (x.GetFileLocation() == inputLocation)
+	//	{
+	//		std::wcout << x << std::endl;
+	//	}
+	//}
 }

@@ -14,13 +14,17 @@ public:
 	void AddToRepo(RepoFile& inputRepoFile);
 	void DeleteFromRepo(RepoFile& inputRepoFile);
 	void ShowAllFiles();
-	void FindInRepoByName(std::wstring inputName);
+	void FindInRepoBySystemName(std::wstring inputName);
 	void FindInRepoByDesc(std::wstring inputDesc);
-	void FindInRepoByFileName(std::wstring inputFileName);
+	void FindInRepoByUserDefinedName(std::wstring inputFileName);
+	void FindInRepoByLocation(std::wstring inputLocation);
 	void RepoLoadFromFile();
-	void RepoSaveToFile();
+	bool RepoSaveToFile();
+	void DeleteFromRepoBySystemName(std::wstring inputName);
+	void DeleteFromRepoByDesc(std::wstring inputDesc);
+	void DeleteFromRepoByUserDefinedName(std::wstring inputFileName);
+	void DeleteFromRepoByLocation(std::wstring inputLocation);
 protected:
 	std::list<RepoFile> repoList;
-	std::list<RepoFile>::iterator repoIter;
 };
 #endif
