@@ -2,17 +2,18 @@
 #define MANAGER_COKOLWIEK
 #include "repository.h"
 #include "repofile.h"
+#include "valuechecker.h"
 #include <list>
 #include <string>
 #include <iterator>
 #include <algorithm>
+#include <iostream>
 class RepoManager : public Repository
 {
 public:
 	RepoManager();
 	virtual ~RepoManager();
 	void AddToRepo(RepoFile& inputRepoFile);
-	void DeleteFromRepo(RepoFile& inputRepoFile);
 	void ShowAllFiles();
 	void FindInRepoBySystemName(std::wstring inputName);
 	void FindInRepoByDesc(std::wstring inputDesc);
@@ -24,6 +25,7 @@ public:
 	void DeleteFromRepoByDesc(std::wstring inputDesc);
 	void DeleteFromRepoByUserDefinedName(std::wstring inputFileName);
 	void DeleteFromRepoByLocation(std::wstring inputLocation);
+	void DeleteFromRepoWholeList();
 protected:
 	std::list<RepoFile> repoList;
 };

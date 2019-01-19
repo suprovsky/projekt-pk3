@@ -30,6 +30,9 @@
     <ClCompile Include="repomanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="valuechecker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="repository.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="repomanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="valuechecker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -91,6 +91,19 @@ void Menu::GenerateSearchOptions()
 	std::wcout << L"└───" << L"(5) Go back to the main menu" << std::endl;
 }
 
+void Menu::GenerateDeleteOptions()
+{
+	SetConsoleTitle(TEXT("RepoFinder - select delete criterion"));
+	std::wcout << L"How do you want to find files which are going to be delete?" << std::endl;
+	std::wcout << L"|" << std::endl;
+	std::wcout << L"├───" << L"(1) Through system file name" << std::endl;
+	std::wcout << L"├───" << L"(2) Through description" << std::endl;
+	std::wcout << L"├───" << L"(3) Through user defined file name" << std::endl;
+	std::wcout << L"├───" << L"(4) Through file location" << std::endl;
+	std::wcout << L"├───" << L"(5) Forget about searching, just show me all files" << std::endl;
+	std::wcout << L"└───" << L"(6) Go back to the main menu" << std::endl;
+}
+
 void Menu::OpenMain()
 {
 	wchar_t selectedOption = '0';
@@ -112,10 +125,10 @@ void Menu::OpenMain()
 			FindRepoFiles();
 			break;
 		case '4':
-			AddRepoFiles();
+			AddRepoFile();
 			break;
 		case '5':
-			DeleteRepoFiles();
+			DeleteRepoFile();
 			break;
 		case '6':
 			SaveChanges();
@@ -139,7 +152,6 @@ void Menu::ShowAllFiles()
 {
 	SetConsoleTitle(TEXT("RepoFinder - show all files in the repository"));
 	clearConsole();
-	std::wcout << L"This is an actual list of files in the repository:" << std::endl;
 	actualManager.ShowAllFiles();
 	std::wcout << L"Press any key to back to main menu.";
 	getch();
@@ -151,22 +163,21 @@ void Menu::FindRepoFiles()
 	do
 	{
 		clearConsole();
-		IsRepositorySet(actualRepo);
 		GenerateSearchOptions();
 		selectedOption = getch();
 		switch (selectedOption)
 		{
 		case '1':
-			ThroughSystemName();
+			FindThroughSystemName();
 			break;
 		case '2':
-			ThroughDescription();
+			FindThroughDescription();
 			break;
 		case '3':
-			ThroughUserDefinedName();
+			FindThroughUserDefinedName();
 			break;
 		case '4':
-			ThroughLocation();
+			FindThroughLocation();
 			break;
 		case '5':
 			OpenMain();
@@ -177,7 +188,7 @@ void Menu::FindRepoFiles()
 	} while (selectedOption != '0');
 }
 
-void Menu::ThroughSystemName()
+void Menu::FindThroughSystemName()
 {
 	SetConsoleTitle(TEXT("RepoFinder - find files through its system name"));
 	clearConsole();
@@ -191,7 +202,7 @@ void Menu::ThroughSystemName()
 	getch();
 }
 
-void Menu::ThroughUserDefinedName()
+void Menu::FindThroughUserDefinedName()
 {
 	SetConsoleTitle(TEXT("RepoFinder - find files through its user defined name"));
 	clearConsole();
@@ -205,7 +216,7 @@ void Menu::ThroughUserDefinedName()
 	getch();
 }
 
-void Menu::ThroughDescription()
+void Menu::FindThroughDescription()
 {
 	SetConsoleTitle(TEXT("RepoFinder - find files through its description"));
 	clearConsole();
@@ -219,7 +230,7 @@ void Menu::ThroughDescription()
 	getch();
 }
 
-void Menu::ThroughLocation()
+void Menu::FindThroughLocation()
 {
 	SetConsoleTitle(TEXT("RepoFinder - find files through its location"));
 	clearConsole();
@@ -233,7 +244,7 @@ void Menu::ThroughLocation()
 	getch();
 }
 
-void Menu::AddRepoFiles()
+void Menu::AddRepoFile()
 {
 	SetConsoleTitle(TEXT("RepoFinder - add a new repository file"));
 	clearConsole();
@@ -255,9 +266,38 @@ void Menu::AddRepoFiles()
 	getch();
 }
 
-void Menu::DeleteRepoFiles()
+void Menu::DeleteRepoFile()
 {
-
+	wchar_t selectedOption = '0';
+	do
+	{
+		clearConsole();
+		GenerateDeleteOptions();
+		selectedOption = getch();
+		switch (selectedOption)
+		{
+		case '1':
+			DeleteThroughSystemName();
+			break;
+		case '2':
+			DeleteThroughDescription();
+			break;
+		case '3':
+			DeleteThroughUserDefinedName();
+			break;
+		case '4':
+			DeleteThroughLocation();
+			break;
+		case '5':
+			ShowAllFilesToDelete();
+			break;
+		case '6':
+			OpenMain();
+			break;
+		default:
+			break;
+		}
+	} while (selectedOption != '0');
 }
 
 void Menu::SaveChanges()
@@ -298,6 +338,72 @@ void Menu::About()
 	std::wcout << L"Zarządzanie obejmuje : przeszukiwanie zasobów, dodawanie nowych pozycji, modyfikacje" << std::endl;
 	std::wcout << L"oraz usuwanie istniejących rekordów." << std::endl << std::endl;
 	std::wcout << L"Press any key to go back to main menu." << std::endl;
+	getch();
+}
+
+void Menu::DeleteThroughSystemName()
+{
+	SetConsoleTitle(TEXT("RepoFinder - delete a file through its system name"));
+	clearConsole();
+	std::wstring searchPhrase;
+	std::wcout << L"Please enter specified file system name to delete: ";
+	std::wcin >> searchPhrase;
+	clearConsole();
+	std::wcout << L"The results are: " << std::endl;
+	actualManager.DeleteFromRepoBySystemName(searchPhrase);
+	std::wcout << std::endl << L"Please enter any key to continue.";
+	getch();
+}
+
+void Menu::DeleteThroughDescription()
+{
+	SetConsoleTitle(TEXT("RepoFinder - delete a file through its description"));
+	clearConsole();
+	std::wstring searchPhrase;
+	std::wcout << L"Please enter specified file description to delete: ";
+	std::wcin >> searchPhrase;
+	clearConsole();
+	std::wcout << L"The results are: " << std::endl;
+	actualManager.DeleteFromRepoByDesc(searchPhrase);
+	std::wcout << std::endl << L"Please enter any key to continue.";
+	getch();
+}
+
+void Menu::DeleteThroughUserDefinedName()
+{
+	SetConsoleTitle(TEXT("RepoFinder - delete a file through its used defined name"));
+	clearConsole();
+	std::wstring searchPhrase;
+	std::wcout << L"Please enter specified file user defined name to delete: ";
+	std::wcin >> searchPhrase;
+	clearConsole();
+	std::wcout << L"The results are: " << std::endl;
+	actualManager.DeleteFromRepoByUserDefinedName(searchPhrase);
+	std::wcout << std::endl << L"Please enter any key to continue.";
+	getch();
+}
+
+void Menu::DeleteThroughLocation()
+{
+	SetConsoleTitle(TEXT("RepoFinder - delete a file through its location"));
+	clearConsole();
+	std::wstring searchPhrase;
+	std::wcout << L"Please enter specified file location to delete: ";
+	std::wcin >> searchPhrase;
+	clearConsole();
+	std::wcout << L"The results are: " << std::endl;
+	actualManager.DeleteFromRepoByLocation(searchPhrase);
+	std::wcout << std::endl << L"Please enter any key to continue.";
+	getch();
+}
+
+void Menu::ShowAllFilesToDelete()
+{
+	SetConsoleTitle(TEXT("RepoFinder - delete a file from a full file list"));
+	clearConsole();
+	std::wcout << L"The results are: " << std::endl;
+	actualManager.DeleteFromRepoWholeList();
+	std::wcout << std::endl << L"Please enter any key to continue.";
 	getch();
 }
 

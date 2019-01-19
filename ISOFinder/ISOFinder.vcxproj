@@ -126,12 +126,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="repository.cpp" />
+    <ClCompile Include="valuechecker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="repofile.h" />
     <ClInclude Include="repomanager.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="repository.h" />
+    <ClInclude Include="valuechecker.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
