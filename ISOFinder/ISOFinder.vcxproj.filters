@@ -21,13 +21,13 @@
     <ClCompile Include="repository.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ISOfile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ISOmanager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="repofile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="repomanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,16 +35,13 @@
     <ClInclude Include="repository.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ISOfile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="md5.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ISOmanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="repofile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="repomanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

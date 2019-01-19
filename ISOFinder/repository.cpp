@@ -5,17 +5,17 @@
 #include <string>
 #include "menu.h"
 
-repository::repository()
+Repository::Repository()
 {
-	RepoLocation = L"-";
+	RepoLocation = L"";
 }
 
 
-repository::~repository()
+Repository::~Repository()
 {
 }
 
-int repository::firstRun()
+int Repository::firstRun()
 {
 	std::wstring path;
 	std::wofstream file;
@@ -40,20 +40,21 @@ int repository::firstRun()
 		std::wcerr << L"Please check if you are authorised to create a file in this directory.";
 		std::wcout << std::endl << std::endl << L"Click ENTER to continue.";
 		std::cin.get();
+		exit(1);
 		return 1;
 	}
 }
-void repository::SetRepoLocation(std::wstring NewLocationAddress)
+void Repository::SetRepoLocation(std::wstring NewLocationAddress)
 {
 	RepoLocation = NewLocationAddress;
 }
 
-std::wstring repository::GetRepoLocation()
+std::wstring Repository::GetRepoLocation()
 {
 	return RepoLocation;
 }
 
-void repository::RepoStartup()
+void Repository::RepoStartup()
 {
 	std::wstring path;
 	std::wifstream file;

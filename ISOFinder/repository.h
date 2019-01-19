@@ -6,11 +6,11 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
-class repository
+class Repository
 {
 public:
-	repository();
-	virtual ~repository();
+	Repository();
+	virtual ~Repository();
 	int firstRun();
 	void SetRepoLocation(std::wstring NewLocationAddress);
 	std::wstring GetRepoLocation();

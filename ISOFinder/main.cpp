@@ -1,8 +1,7 @@
 #include <iostream>
-#include "ISOfile.h"
-#include "ISOmanager.h"
+#include "repofile.h"
+#include "repomanager.h"
 #include "repository.h"
-#include "md5.h"
 #include "menu.h"
 #include <Windows.h>
 #include <fstream>
@@ -15,9 +14,11 @@
 int main()
 {
 	_setmode(_fileno(stdout), _O_U16TEXT);
-	repository repo;
+	Repository repo;
+	RepoManager firstInstance;
 	repo.RepoStartup();
-	Menu NewMenu(repo);
+	Menu NewMenu(repo, firstInstance);
 	NewMenu.OpenMain();
+
 	return 0;
 }

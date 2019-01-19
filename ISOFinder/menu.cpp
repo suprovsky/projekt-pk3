@@ -2,11 +2,13 @@
 #include "repository.h"
 #include <iostream>
 #include <Windows.h>
+#include "repomanager.h"
 #include <io.h>
 #include <fcntl.h>
 #include <conio.h>
+#include "repofile.h"
 
-Menu::Menu(repository& inputRepo) : actualRepo(inputRepo)
+Menu::Menu(Repository& startRepo, RepoManager& startManager) : actualRepo(startRepo), actualManager(startManager)
 {
 }
 
@@ -27,10 +29,10 @@ void Menu::clearConsole() {
 	SetConsoleCursorPosition(console, topLeft);
 }
 
-void Menu::ChangeRepoLocation(repository& inputRepo)
+void Menu::ChangeRepoLocation(Repository& inputRepo)
 {
 	clearConsole();
-	SetConsoleTitle(TEXT("ISOfinder - set new repository location"));
+	SetConsoleTitle(TEXT("RepoFinder - set new repository location"));
 	std::wstring NewLocation = L"-";
 	std::wcout << L"The current repository location is: " << inputRepo.GetRepoLocation() << std::endl;
 	std::wcout << L"Please enter new repository location and press ENTER." << std::endl;
@@ -52,7 +54,7 @@ void Menu::ChangeRepoLocation(repository& inputRepo)
 	}
 }
 
-void Menu::IsRepositorySet(repository& inputRepo)
+void Menu::IsRepositorySet(Repository& inputRepo)
 {
 	std::wstring defaultRepoLocation = L"-";
 	if (inputRepo.GetRepoLocation() == defaultRepoLocation) {
@@ -63,13 +65,13 @@ void Menu::IsRepositorySet(repository& inputRepo)
 
 void Menu::GenerateMainOptions()
 {
-	SetConsoleTitle(TEXT("ISOfinder - main menu"));
-	std::wcout << L"Welcome in ISOfinder! Choose desired operation by typing a number:" << std::endl;
+	SetConsoleTitle(TEXT("RepoFinder - main menu"));
+	std::wcout << L"Welcome in Repofinder! Choose desired operation by typing a number:" << std::endl;
 	std::wcout << L"|" << std::endl;
 	std::wcout << L"├───" << L"(1) Set new repository location" << std::endl;
-	std::wcout << L"├───" << L"(2) Sync repository location" << std::endl;
-	std::wcout << L"├───" << L"(3) Find specified ISO file" << std::endl;
-	std::wcout << L"├───" << L"(4) Add ISO files manually" << std::endl;
+	std::wcout << L"├───" << L"(2) Show all files in repository" << std::endl;
+	std::wcout << L"├───" << L"(3) Find specified Repo file" << std::endl;
+	std::wcout << L"├───" << L"(4) Add Repo files manually" << std::endl;
 	std::wcout << L"├───" << L"(5) Save changes into repository" << std::endl;
 	std::wcout << L"├───" << L"(6) Help" << std::endl;
 	std::wcout << L"├───" << L"(7) About the project" << std::endl;
@@ -91,13 +93,13 @@ void Menu::OpenMain()
 			ChangeRepoLocation(actualRepo);
 			break;
 		case '2':
-			SyncLocation();
+			ShowAllFiles();
 			break;
 		case '3':
 			FindISOFiles();
 			break;
 		case '4':
-			AddISOFiles();
+			AddRepoFiles();
 			break;
 		case '5':
 			SaveChanges();
@@ -117,51 +119,73 @@ void Menu::OpenMain()
 	} while (selectedOption != '0');
 }
 
-void Menu::SyncLocation()
+void Menu::ShowAllFiles()
 {
-	SetConsoleTitle(TEXT("ISOfinder"));
+	SetConsoleTitle(TEXT("RepoFinder"));
 	clearConsole();
+	std::wcout << "This is an actual list of files in the repository:" << std::endl;
+	actualManager.ShowAllFiles();
+	std::wcout << "Press any key to back to main menu.";
+	getch();
 }
 
 void Menu::FindISOFiles()
 {
-	SetConsoleTitle(TEXT("ISOfinder"));
+	SetConsoleTitle(TEXT("RepoFinder"));
 	clearConsole();
 }
 
 void Menu::ThroughSystemName()
 {
-	SetConsoleTitle(TEXT("ISOfinder"));
+	SetConsoleTitle(TEXT("RepoFinder"));
 	clearConsole();
 }
 
 void Menu::ThroughFilename()
 {
-	SetConsoleTitle(TEXT("ISOfinder"));
+	SetConsoleTitle(TEXT("RepoFinder"));
 	clearConsole();
 }
 
 void Menu::ThroughDescription()
 {
-	SetConsoleTitle(TEXT("ISOfinder"));
+	SetConsoleTitle(TEXT("RepoFinder"));
 	clearConsole();
 }
 
-void Menu::AddISOFiles()
+void Menu::AddRepoFiles()
 {
-	SetConsoleTitle(TEXT("ISOfinder"));
+	SetConsoleTitle(TEXT("RepoFinder - add a new repository file"));
 	clearConsole();
+	std::wstring fName, fDesc, fFilename, fLocation;
+	std::wcout << L"Insert filename: ";
+	std::wcin >> fFilename;
+	std::wcout << L"Insert file description: ";
+	std::wcin >> fDesc;
+	std::wcout << L"Insert your filename (can contain spaces): ";
+	std::wcin >> fName;
+	std::wcout << L"Insert file location: ";
+	std::wcin >> fLocation;
+	RepoFile newPosition(fName, fDesc, fFilename, fLocation);
+	actualManager.AddToRepo(newPosition);
+	clearConsole();
+	std::wcout << L"New file added: " << fFilename << std::endl;
+	std::wcout << L"File description: " << fDesc << std::endl;
+	std::wcout << L"Full filename: " << fName << std::endl;
+	std::wcout << L"File location: " << fLocation << std::endl;
+	std::wcout << L"Press anything to continue.";
+	getch();
 }
 
 void Menu::SaveChanges()
 {
-	SetConsoleTitle(TEXT("ISOfinder"));
+	SetConsoleTitle(TEXT("RepoFinder"));
 	clearConsole();
 }
 
 void Menu::Help()
 {
-	SetConsoleTitle(TEXT("ISOfinder = help"));
+	SetConsoleTitle(TEXT("RepoFinder = help"));
 	clearConsole();
 	std::wcout << L"TO DO!" << std::endl << std::endl;
 	std::wcout << L"Press any key to go back to main menu." << std::endl;
@@ -170,7 +194,7 @@ void Menu::Help()
 
 void Menu::About()
 {
-	SetConsoleTitle(TEXT("ISOfinder - about the project"));
+	SetConsoleTitle(TEXT("RepoFinder - about the project"));
 	clearConsole();
 	std::wcout << L"This program was made by Radosław Serba. Generally speaking it is a project for one of my subjects" << std::endl;
 	std::wcout << L"called \"computer programming\" on the Silesian University of Technology in Gliwice, Poland." << std::endl << std::endl;

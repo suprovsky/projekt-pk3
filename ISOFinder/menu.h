@@ -2,26 +2,29 @@
 #define MENU_COKOLWIEK
 #include <iostream>
 #include "repository.h"
+#include "repomanager.h"
 class Menu
 {
 public:
-	Menu(repository& startRepo);
+	Menu(Repository& startRepo, RepoManager& startManager);
 	static void clearConsole();
-	void ChangeRepoLocation(repository& inputRepo);
-	void IsRepositorySet(repository& inputRepo);
+	void ChangeRepoLocation(Repository& inputRepo);
+	void IsRepositorySet(Repository& inputRepo);
 	void GenerateMainOptions();
 	void OpenMain();
-	void SyncLocation();
+	void ShowAllFiles();
 	void FindISOFiles();
 	void ThroughSystemName();
 	void ThroughFilename();
 	void ThroughDescription();
-	void AddISOFiles();
+	void AddRepoFiles();
 	void SaveChanges();
 	void Help();
 	void About();
 	virtual ~Menu();
 private:
-	repository& actualRepo;
+	Repository& actualRepo;
+	RepoManager& actualManager;
+
 };
 #endif
