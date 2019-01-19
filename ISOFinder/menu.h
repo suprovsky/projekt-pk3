@@ -8,8 +8,9 @@ class Menu
 public:
 	Menu(Repository& startRepo, RepoManager& startManager);
 	static void clearConsole();
-	void ChangeRepoLocation(Repository& inputRepo);
-	void IsRepositorySet(Repository& inputRepo);
+	void ChangeRepoLocation();
+	void IsRepositorySet();
+	void IsChangesUnsaved();
 	void GenerateMainOptions();
 	void GenerateSearchOptions();
 	void GenerateDeleteOptions();

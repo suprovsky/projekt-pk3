@@ -21,12 +21,12 @@ public:
 	std::wstring GetFileLocation();
 	RepoFile& operator=(RepoFile &right);
 	friend std::wostream& operator<<(std::wostream& output, RepoFile& right);
+	friend std::wistream& operator>>(std::wistream& input, RepoFile& right);
 private:
 	std::wstring fileSystemName;
 	std::wstring fileUserDefinedName;
 	std::wstring fileDescription;
 	std::wstring fileLocation;
-	//auto ISOmodificationTime;
 
 };
 #endif

@@ -26,7 +26,9 @@ public:
 	void DeleteFromRepoByUserDefinedName(std::wstring inputFileName);
 	void DeleteFromRepoByLocation(std::wstring inputLocation);
 	void DeleteFromRepoWholeList();
+	bool changesNotSaved;
 protected:
 	std::list<RepoFile> repoList;
+	std::wstring listPath;
 };
 #endif

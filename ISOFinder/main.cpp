@@ -20,6 +20,5 @@ int main()
 	repo.RepoStartup();
 	Menu NewMenu(repo, firstInstance);
 	NewMenu.OpenMain();
-
 	return 0;
 }

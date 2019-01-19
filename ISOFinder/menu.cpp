@@ -29,18 +29,18 @@ void Menu::clearConsole() {
 	SetConsoleCursorPosition(console, topLeft);
 }
 
-void Menu::ChangeRepoLocation(Repository& inputRepo)
+void Menu::ChangeRepoLocation()
 {
 	clearConsole();
 	SetConsoleTitle(TEXT("RepoFinder - set new repository location"));
 	std::wstring NewLocation = L"-";
-	std::wcout << L"The current repository location is: " << inputRepo.GetRepoLocation() << std::endl;
+	std::wcout << L"The current repository location is: " << actualRepo.GetRepoLocation() << std::endl;
 	std::wcout << L"Please enter new repository location and press ENTER." << std::endl;
 	std::wcout << L"If you want to cancel repository change, please type \"cancel\" as a value and press ENTER." << std::endl;
 	std::wcin >> NewLocation;
 	if (!(NewLocation == L"cancel"))
 	{
-		inputRepo.SetRepoLocation(NewLocation);
+		actualRepo.SetRepoLocation(NewLocation);
 		std::wstring path;
 		std::wofstream file;
 		path = _wgetenv(L"appdata");
@@ -48,20 +48,26 @@ void Menu::ChangeRepoLocation(Repository& inputRepo)
 		file.open(path.c_str(), std::ios::out | std::ios::trunc);
 		if (file.is_open())
 		{
-			file << inputRepo.GetRepoLocation();
+			file << actualRepo.GetRepoLocation();
 			file.close();
 		}
 	}
 }
 
-void Menu::IsRepositorySet(Repository& inputRepo)
+void Menu::IsRepositorySet()
 {
 	std::wstring defaultRepoLocation = L"-";
-	if (inputRepo.GetRepoLocation() == defaultRepoLocation) {
+	if (actualRepo.GetRepoLocation() == defaultRepoLocation) {
 		std::wcout << L"WARNING: repository location is not set" << std::endl << std::endl;
 	}
 }
 
+void Menu::IsChangesUnsaved()
+{
+	if (actualManager.changesNotSaved) {
+		std::wcout << L"WARNING: there are unsaved changes in the repository" << std::endl << std::endl;
+	}
+}
 
 void Menu::GenerateMainOptions()
 {
@@ -110,13 +116,14 @@ void Menu::OpenMain()
 	do 
 	{
 		clearConsole();
-		IsRepositorySet(actualRepo);
+		IsRepositorySet();
+		IsChangesUnsaved();
 		GenerateMainOptions();
 		selectedOption = getch();
 		switch (selectedOption)
 		{
 		case '1':
-			ChangeRepoLocation(actualRepo);
+			ChangeRepoLocation();
 			break;
 		case '2':
 			ShowAllFiles();

@@ -4,6 +4,9 @@
 
 RepoManager::RepoManager()
 {
+	changesNotSaved = false;
+	listPath = _wgetenv(L"appdata");
+	listPath += L"\\FileFinder.dat";
 }
 
 
@@ -15,6 +18,7 @@ RepoManager::~RepoManager()
 void RepoManager::AddToRepo(RepoFile& inputRepoFile)
 {
 	repoList.push_back(inputRepoFile);
+	changesNotSaved = true;
 }
 
 
@@ -82,11 +86,37 @@ void RepoManager::FindInRepoByLocation(std::wstring inputLocation)
 
 void RepoManager::RepoLoadFromFile()
 {
+	RepoFile inputObject;
+	std::wstring inputString;
+	std::wifstream file;
+	file.open(listPath, std::ios::in);
+	if (file.is_open())
+	{
+		while (std::getline(file, inputString))
+		{
+			
+		}
+	}
 }
 
 bool RepoManager::RepoSaveToFile()
 {
-	return true;
+	std::wofstream file;
+	file.open(listPath, std::ios::out | std::ios::trunc);
+	if (file.is_open())
+	{
+		for (auto x : repoList)
+		{
+			file << x;
+		}
+		file.close();
+		changesNotSaved = false;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void RepoManager::DeleteFromRepoBySystemName(std::wstring inputName)
@@ -119,6 +149,7 @@ void RepoManager::DeleteFromRepoBySystemName(std::wstring inputName)
 		std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
 		repoList.erase(listIter);
 		std::wcout << L"Done, file deleted." << std::endl;
+		changesNotSaved = true;
 	}
 }
 
@@ -152,6 +183,7 @@ void RepoManager::DeleteFromRepoByDesc(std::wstring inputDesc)
 		std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
 		repoList.erase(listIter);
 		std::wcout << L"Done, file deleted." << std::endl;
+		changesNotSaved = true;
 	}
 }
 
@@ -185,6 +217,7 @@ void RepoManager::DeleteFromRepoByUserDefinedName(std::wstring inputUserDefinedN
 		std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
 		repoList.erase(listIter);
 		std::wcout << L"Done, file deleted." << std::endl;
+		changesNotSaved = true;
 	}
 }
 
@@ -218,6 +251,7 @@ void RepoManager::DeleteFromRepoByLocation(std::wstring inputLocation)
 		std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
 		repoList.erase(listIter);
 		std::wcout << L"Done, file deleted." << std::endl;
+		changesNotSaved = true;
 	}
 }
 
@@ -244,4 +278,5 @@ void RepoManager::DeleteFromRepoWholeList()
 	std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
 	repoList.erase(listIter);
 	std::wcout << L"Done, file deleted." << std::endl;
+	changesNotSaved = true;
 }

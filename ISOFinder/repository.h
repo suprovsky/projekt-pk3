@@ -16,7 +16,6 @@ public:
 	std::wstring GetRepoLocation();
 	void RepoStartup();
 private:
-	unsigned int ISOid;
 	std::wstring RepoLocation;
 };
 #endif // !REPOSITORY_COKOLWIEK
