@@ -1,5 +1,5 @@
-#ifndef REPOFILE_COKOLWIEK
-#define REPOFILE_COKOLWIEK
+#ifndef REPOFILE
+#define REPOFILE
 #include "repository.h"
 #include <iostream>
 #include <fstream>
@@ -27,7 +27,6 @@ private:
 	std::wstring fileUserDefinedName;
 	std::wstring fileDescription;
 	std::wstring fileLocation;
-
 };
 #endif
 

@@ -78,7 +78,7 @@ std::wostream & operator<<(std::wostream & output, RepoFile & right)
 	output << L"System file name: " << right.fileSystemName << std::endl;
 	output << L"Description: " << right.fileDescription << std::endl;
 	output << L"User defined file name: " << right.fileUserDefinedName << std::endl;
-	output << L"Location: " << right.fileLocation << std::endl;
+	output << L"Location: " << right.fileLocation << std::endl << std::endl;
 	return output;
 }
 
@@ -97,6 +97,6 @@ std::wistream & operator>>(std::wistream & input, RepoFile & right)
 	input.ignore(11+1);//L"Location: " + std::endl
 	input >> inputUserDefinedName;
 	right.SetSystemName(inputLocation);
-	input.ignore(1);//std::endl
+	input.ignore(2);//std::endl + std::endl
 	return input;
 }

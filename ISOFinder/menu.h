@@ -1,5 +1,5 @@
-#ifndef MENU_COKOLWIEK
-#define MENU_COKOLWIEK
+#ifndef MENU
+#define MENU
 #include <iostream>
 #include "repository.h"
 #include "repomanager.h"
@@ -31,10 +31,10 @@ public:
 	void DeleteThroughUserDefinedName();
 	void DeleteThroughLocation();
 	void ShowAllFilesToDelete();
+	void EditRepoFile();
 	virtual ~Menu();
 private:
 	Repository& actualRepo;
 	RepoManager& actualManager;
-
 };
 #endif

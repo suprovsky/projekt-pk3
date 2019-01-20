@@ -7,6 +7,7 @@ RepoManager::RepoManager()
 	changesNotSaved = false;
 	listPath = _wgetenv(L"appdata");
 	listPath += L"\\FileFinder.dat";
+	RepoLoadFromFile();
 }
 
 
@@ -92,10 +93,20 @@ void RepoManager::RepoLoadFromFile()
 	file.open(listPath, std::ios::in);
 	if (file.is_open())
 	{
-		while (std::getline(file, inputString))
+		while (!(file.eof()))
 		{
-			
+			std::getline(file, inputString, L',');
+			inputObject.SetSystemName(inputString);
+			std::getline(file, inputString, L',');
+			inputObject.SetFileDesc(inputString);
+			std::getline(file, inputString, L',');
+			inputObject.SetUserDefinedName(inputString);
+			std::getline(file, inputString, L',');
+			inputObject.SetFileLocation(inputString);
+			std::getline(file, inputString, L'\n');
+			repoList.push_back(inputObject);
 		}
+		file.close();
 	}
 }
 
@@ -107,9 +118,10 @@ bool RepoManager::RepoSaveToFile()
 	{
 		for (auto x : repoList)
 		{
-			file << x;
+			file << x.GetSystemName() << "," << x.GetFileDesc() << "," << x.GetUserDefinedName() << "," << x.GetFileLocation() << "," << std::endl;
 		}
 		file.close();
+		ValueChecker::DeleteLastCharacter(listPath);
 		changesNotSaved = false;
 		return true;
 	}
@@ -121,123 +133,167 @@ bool RepoManager::RepoSaveToFile()
 
 void RepoManager::DeleteFromRepoBySystemName(std::wstring inputName)
 {
-	int deletedValue, iter = 0;
-	std::list<RepoFile>::iterator listIter = repoList.begin();
-	std::vector<int> availableValues;
-	for (auto x : repoList){
-		iter++;
-		if (x.GetSystemName() == inputName)
-		{
-			std::wcout << L"Object index: " << iter << std::endl << x << std::endl << std::endl;
-			availableValues.push_back(iter);
+	if (!(repoList.empty()))
+	{
+		int deletedValue, iter = 0;
+		std::list<RepoFile>::iterator listIter = repoList.begin();
+		std::vector<int> availableValues;
+		for (auto x : repoList){
+			iter++;
+			if (x.GetSystemName() == inputName)
+			{
+				std::wcout << L"Object index: " << iter << std::endl << x << std::endl << std::endl;
+				availableValues.push_back(iter);
+			}
+		}
+		if (availableValues.size() == 0){
+			std::wcout << L"There are no matches for the following phrase: " << inputName << std::endl;
+		}
+		else{
+			std::wcout << L"Please enter desired object index to be deleted: ";
+			bool compare = false;
+			do{
+				std::wcin >> deletedValue;
+				ValueChecker::IfInt();
+				if (!(std::find(availableValues.begin(), availableValues.end(), deletedValue) != availableValues.end())){
+					std::wcout << L"Value out of range. Please enter object index again: ";
+				}
+				else compare = true;
+			} while (!(compare));
+			std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
+			repoList.erase(listIter);
+			std::wcout << L"Done, file deleted." << std::endl;
+			changesNotSaved = true;
 		}
 	}
-	if (availableValues.size() == 0){
-		std::wcout << L"There are no matches for the following phrase: " << inputName << std::endl;
-	}
-	else{
-		std::wcout << L"Please enter desired object index to be deleted: ";
-		bool compare = false;
-		do{
-			std::wcin >> deletedValue;
-			ValueChecker::IfInt();
-			if (!(std::find(availableValues.begin(), availableValues.end(), deletedValue) != availableValues.end())){
-				std::wcout << L"Value out of range. Please enter object index again: ";
-			}
-			else compare = true;
-		} while (!(compare));
-		std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
-		repoList.erase(listIter);
-		std::wcout << L"Done, file deleted." << std::endl;
-		changesNotSaved = true;
-	}
+	else std::wcout << L"Actual repository is empty. There is nothing do delete." << std::endl;
 }
 
 void RepoManager::DeleteFromRepoByDesc(std::wstring inputDesc)
 {
-	int deletedValue, iter = 0;
-	std::list<RepoFile>::iterator listIter = repoList.begin();
-	std::vector<int> availableValues;
-	for (auto x : repoList) {
-		iter++;
-		if (x.GetFileDesc() == inputDesc)
-		{
-			std::wcout << L"Object index: " << iter << std::endl << x << std::endl << std::endl;
-			availableValues.push_back(iter);
+	if (!(repoList.empty()))
+	{
+		int deletedValue, iter = 0;
+		std::list<RepoFile>::iterator listIter = repoList.begin();
+		std::vector<int> availableValues;
+		for (auto x : repoList) {
+			iter++;
+			if (x.GetFileDesc() == inputDesc)
+			{
+				std::wcout << L"Object index: " << iter << std::endl << x << std::endl << std::endl;
+				availableValues.push_back(iter);
+			}
+		}
+		if (availableValues.size() == 0) {
+			std::wcout << L"There are no matches for the following phrase: " << inputDesc << std::endl;
+		}
+		else {
+			std::wcout << L"Please enter desired object index to be deleted: ";
+			bool compare = false;
+			do {
+				std::wcin >> deletedValue;
+				ValueChecker::IfInt();
+				if (!(std::find(availableValues.begin(), availableValues.end(), deletedValue) != availableValues.end())) {
+					std::wcout << L"Value out of range. Please enter object index again: ";
+				}
+				else compare = true;
+			} while (!(compare));
+			std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
+			repoList.erase(listIter);
+			std::wcout << L"Done, file deleted." << std::endl;
+			changesNotSaved = true;
 		}
 	}
-	if (availableValues.size() == 0) {
-		std::wcout << L"There are no matches for the following phrase: " << inputDesc << std::endl;
-	}
-	else {
-		std::wcout << L"Please enter desired object index to be deleted: ";
-		bool compare = false;
-		do {
-			std::wcin >> deletedValue;
-			ValueChecker::IfInt();
-			if (!(std::find(availableValues.begin(), availableValues.end(), deletedValue) != availableValues.end())) {
-				std::wcout << L"Value out of range. Please enter object index again: ";
-			}
-			else compare = true;
-		} while (!(compare));
-		std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
-		repoList.erase(listIter);
-		std::wcout << L"Done, file deleted." << std::endl;
-		changesNotSaved = true;
-	}
+	else std::wcout << L"Actual repository is empty. There is nothing do delete." << std::endl;
 }
 
 void RepoManager::DeleteFromRepoByUserDefinedName(std::wstring inputUserDefinedName)
 {
-	int deletedValue, iter = 0;
-	std::list<RepoFile>::iterator listIter = repoList.begin();
-	std::vector<int> availableValues;
-	for (auto x : repoList) {
-		iter++;
-		if (x.GetUserDefinedName() == inputUserDefinedName)
-		{
-			std::wcout << L"Object index: " << iter << std::endl << x << std::endl << std::endl;
-			availableValues.push_back(iter);
+	if (!(repoList.empty()))
+	{
+		int deletedValue, iter = 0;
+		std::list<RepoFile>::iterator listIter = repoList.begin();
+		std::vector<int> availableValues;
+		for (auto x : repoList) {
+			iter++;
+			if (x.GetUserDefinedName() == inputUserDefinedName)
+			{
+				std::wcout << L"Object index: " << iter << std::endl << x << std::endl << std::endl;
+				availableValues.push_back(iter);
+			}
+		}
+		if (availableValues.size() == 0) {
+			std::wcout << L"There are no matches for the following phrase: " << inputUserDefinedName << std::endl;
+		}
+		else {
+			std::wcout << L"Please enter desired object index to be deleted: ";
+			bool compare = false;
+			do {
+				std::wcin >> deletedValue;
+				ValueChecker::IfInt();
+				if (!(std::find(availableValues.begin(), availableValues.end(), deletedValue) != availableValues.end())) {
+					std::wcout << L"Value out of range. Please enter object index again: ";
+				}
+				else compare = true;
+			} while (!(compare));
+			std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
+			repoList.erase(listIter);
+			std::wcout << L"Done, file deleted." << std::endl;
+			changesNotSaved = true;
 		}
 	}
-	if (availableValues.size() == 0) {
-		std::wcout << L"There are no matches for the following phrase: " << inputUserDefinedName << std::endl;
-	}
-	else {
-		std::wcout << L"Please enter desired object index to be deleted: ";
-		bool compare = false;
-		do {
-			std::wcin >> deletedValue;
-			ValueChecker::IfInt();
-			if (!(std::find(availableValues.begin(), availableValues.end(), deletedValue) != availableValues.end())) {
-				std::wcout << L"Value out of range. Please enter object index again: ";
-			}
-			else compare = true;
-		} while (!(compare));
-		std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
-		repoList.erase(listIter);
-		std::wcout << L"Done, file deleted." << std::endl;
-		changesNotSaved = true;
-	}
+	else std::wcout << L"Actual repository is empty. There is nothing do delete." << std::endl;
 }
 
 void RepoManager::DeleteFromRepoByLocation(std::wstring inputLocation)
 {
-	int deletedValue, iter = 0;
-	std::list<RepoFile>::iterator listIter = repoList.begin();
-	std::vector<int> availableValues;
-	for (auto x : repoList) {
-		iter++;
-		if (x.GetFileLocation() == inputLocation)
-		{
+	if (!(repoList.empty()))
+	{
+		int deletedValue, iter = 0;
+		std::list<RepoFile>::iterator listIter = repoList.begin();
+		std::vector<int> availableValues;
+		for (auto x : repoList) {
+			iter++;
+			if (x.GetFileLocation() == inputLocation)
+			{
+				std::wcout << L"Object index: " << iter << std::endl << x << std::endl << std::endl;
+				availableValues.push_back(iter);
+			}
+		}
+		if (availableValues.size() == 0) {
+			std::wcout << L"There are no matches for the following phrase: " << inputLocation << std::endl;
+		}
+		else {
+			std::wcout << L"Please enter desired object index to be deleted: ";
+			bool compare = false;
+			do {
+				std::wcin >> deletedValue;
+				ValueChecker::IfInt();
+				if (!(std::find(availableValues.begin(), availableValues.end(), deletedValue) != availableValues.end())) {
+					std::wcout << L"Value out of range. Please enter object index again: ";
+				}
+				else compare = true;
+			} while (!(compare));
+			std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
+			repoList.erase(listIter);
+			std::wcout << L"Done, file deleted." << std::endl;
+			changesNotSaved = true;
+		}
+	}
+	else std::wcout << L"Actual repository is empty. There is nothing do delete." << std::endl;
+}
+
+void RepoManager::DeleteFromRepoWholeList()
+{
+	if (!(repoList.empty())){
+		int deletedValue, iter = 0;
+		std::list<RepoFile>::iterator listIter = repoList.begin();
+		std::vector<int> availableValues;
+		for (auto x : repoList) {
+			iter++;
 			std::wcout << L"Object index: " << iter << std::endl << x << std::endl << std::endl;
 			availableValues.push_back(iter);
 		}
-	}
-	if (availableValues.size() == 0) {
-		std::wcout << L"There are no matches for the following phrase: " << inputLocation << std::endl;
-	}
-	else {
 		std::wcout << L"Please enter desired object index to be deleted: ";
 		bool compare = false;
 		do {
@@ -253,30 +309,63 @@ void RepoManager::DeleteFromRepoByLocation(std::wstring inputLocation)
 		std::wcout << L"Done, file deleted." << std::endl;
 		changesNotSaved = true;
 	}
+	else std::wcout << L"Actual repository is empty. There is nothing do delete." << std::endl;
 }
 
-void RepoManager::DeleteFromRepoWholeList()
+void RepoManager::EditFileFromWholeList()
 {
-	int deletedValue, iter = 0;
-	std::list<RepoFile>::iterator listIter = repoList.begin();
-	std::vector<int> availableValues;
-	for (auto x : repoList) {
-		iter++;
-		std::wcout << L"Object index: " << iter << std::endl << x << std::endl << std::endl;
-		availableValues.push_back(iter);
-	}
-	std::wcout << L"Please enter desired object index to be deleted: ";
-	bool compare = false;
-	do {
-		std::wcin >> deletedValue;
-		ValueChecker::IfInt();
-		if (!(std::find(availableValues.begin(), availableValues.end(), deletedValue) != availableValues.end())) {
-			std::wcout << L"Value out of range. Please enter object index again: ";
+	if (!(repoList.empty())){
+		int selectedValue, iter = 0;
+		std::list<RepoFile>::iterator listIter = repoList.begin();
+		std::vector<int> availableValues;
+		for (auto x : repoList) {
+			iter++;
+			std::wcout << L"Object index: " << iter << std::endl << x << std::endl << std::endl;
+			availableValues.push_back(iter);
 		}
-		else compare = true;
-	} while (!(compare));
-	std::advance(listIter, deletedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
-	repoList.erase(listIter);
-	std::wcout << L"Done, file deleted." << std::endl;
-	changesNotSaved = true;
+		std::wcout << L"Please enter desired object index to be edited: ";
+		bool compare = false;
+		do {
+			std::wcin >> selectedValue;
+			ValueChecker::IfInt();
+			if (!(std::find(availableValues.begin(), availableValues.end(), selectedValue) != availableValues.end())) {
+				std::wcout << L"Value out of range. Please enter object index again: ";
+			}
+			else compare = true;
+		} while (!(compare));
+		std::advance(listIter, selectedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
+		ChangeSelectedValueInsideList(listIter);
+		std::wcout << L"Done, file edited." << std::endl;
+		changesNotSaved = true;
+	}
+	else std::wcout << L"File repository is empty. There is nothing do edit." << std::endl;
+}
+
+void::RepoManager::ChangeSelectedValueInsideList(std::list<RepoFile>::iterator inputIterator)
+{
+	std::wstring editedValue;
+	std::getline(std::wcin, editedValue);
+	std::wcout << L"Select edited value type: (1) System filename, (2) File description, (3) User defined filename, (4) file location" << std::endl;
+	wchar_t selectedOption = '0';
+	do
+	{
+		selectedOption = getch();
+		switch (selectedOption)
+		{
+		case '1':
+			inputIterator->SetSystemName(editedValue);
+			break;
+		case '2':
+			inputIterator->SetFileDesc(editedValue);
+			break;
+		case '3':
+			inputIterator->SetUserDefinedName(editedValue);
+			break;
+		case '4':
+			inputIterator->SetFileLocation(editedValue);
+			break;
+		default:
+			break;
+		}
+	} while (selectedOption != '0');
 }

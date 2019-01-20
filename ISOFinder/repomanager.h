@@ -1,5 +1,5 @@
-#ifndef MANAGER_COKOLWIEK
-#define MANAGER_COKOLWIEK
+#ifndef MANAGER
+#define MANAGER
 #include "repository.h"
 #include "repofile.h"
 #include "valuechecker.h"
@@ -8,6 +8,7 @@
 #include <iterator>
 #include <algorithm>
 #include <iostream>
+#include <conio.h>
 class RepoManager : public Repository
 {
 public:
@@ -26,9 +27,12 @@ public:
 	void DeleteFromRepoByUserDefinedName(std::wstring inputFileName);
 	void DeleteFromRepoByLocation(std::wstring inputLocation);
 	void DeleteFromRepoWholeList();
+	void EditFileFromWholeList();
 	bool changesNotSaved;
 protected:
 	std::list<RepoFile> repoList;
 	std::wstring listPath;
+	void ChangeSelectedValueInsideList(std::list<RepoFile>::iterator inputIterator);
+
 };
 #endif

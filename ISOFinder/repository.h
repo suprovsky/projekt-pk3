@@ -1,5 +1,5 @@
-#ifndef REPOSITORY_COKOLWIEK
-#define REPOSITORY_COKOLWIEK
+#ifndef REPOSITORY
+#define REPOSITORY
 
 #include "repository.h"
 #include <iostream>

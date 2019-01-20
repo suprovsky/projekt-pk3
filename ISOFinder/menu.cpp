@@ -37,7 +37,7 @@ void Menu::ChangeRepoLocation()
 	std::wcout << L"The current repository location is: " << actualRepo.GetRepoLocation() << std::endl;
 	std::wcout << L"Please enter new repository location and press ENTER." << std::endl;
 	std::wcout << L"If you want to cancel repository change, please type \"cancel\" as a value and press ENTER." << std::endl;
-	std::wcin >> NewLocation;
+	std::getline(std::wcin, NewLocation);
 	if (!(NewLocation == L"cancel"))
 	{
 		actualRepo.SetRepoLocation(NewLocation);
@@ -79,10 +79,11 @@ void Menu::GenerateMainOptions()
 	std::wcout << L"├───" << L"(3) Find specified Repo file" << std::endl;
 	std::wcout << L"├───" << L"(4) Add Repo file" << std::endl;
 	std::wcout << L"├───" << L"(5) Delete Repo file" << std::endl;
-	std::wcout << L"├───" << L"(6) Save changes into repository" << std::endl;
-	std::wcout << L"├───" << L"(7) Help" << std::endl;
-	std::wcout << L"├───" << L"(8) About the project" << std::endl;
-	std::wcout << L"└───" << L"(9) Exit" << std::endl;
+	std::wcout << L"├───" << L"(6) Edit Repo file" << std::endl;
+	std::wcout << L"├───" << L"(7) Save changes into repository" << std::endl;
+	std::wcout << L"├───" << L"(8) Help" << std::endl;
+	std::wcout << L"├───" << L"(9) About the project" << std::endl;
+	std::wcout << L"└───" << L"(0) Exit" << std::endl;
 }
 
 void Menu::GenerateSearchOptions()
@@ -138,15 +139,18 @@ void Menu::OpenMain()
 			DeleteRepoFile();
 			break;
 		case '6':
-			SaveChanges();
+			EditRepoFile();
 			break;
 		case '7':
-			Help();
+			SaveChanges();
 			break;
 		case '8':
-			About();
+			Help();
 			break;
 		case '9':
+			About();
+			break;
+		case '0':
 			exit(0);
 			break;
 		default:
@@ -201,7 +205,7 @@ void Menu::FindThroughSystemName()
 	clearConsole();
 	std::wstring searchPhrase;
 	std::wcout << L"Please enter specified file system name to search: ";
-	std::wcin >> searchPhrase;
+	std::getline(std::wcin, searchPhrase);
 	clearConsole();
 	std::wcout << L"The results are: " << std::endl;
 	actualManager.FindInRepoBySystemName(searchPhrase);
@@ -215,7 +219,7 @@ void Menu::FindThroughUserDefinedName()
 	clearConsole();
 	std::wstring searchPhrase;
 	std::wcout << L"Please enter specified user defined name to search: ";
-	std::wcin >> searchPhrase;
+	std::getline(std::wcin, searchPhrase);
 	clearConsole();
 	std::wcout << L"The results are: " << std::endl;
 	actualManager.FindInRepoByUserDefinedName(searchPhrase);
@@ -229,7 +233,7 @@ void Menu::FindThroughDescription()
 	clearConsole();
 	std::wstring searchPhrase;
 	std::wcout << L"Please enter specified file description to search: ";
-	std::wcin >> searchPhrase;
+	std::getline(std::wcin, searchPhrase);
 	clearConsole();
 	std::wcout << L"The results are: " << std::endl;
 	actualManager.FindInRepoByDesc(searchPhrase);
@@ -243,7 +247,7 @@ void Menu::FindThroughLocation()
 	clearConsole();
 	std::wstring searchPhrase;
 	std::wcout << L"Please enter specified file location to search: ";
-	std::wcin >> searchPhrase;
+	std::getline(std::wcin, searchPhrase);
 	clearConsole();
 	std::wcout << L"The results are: " << std::endl;
 	actualManager.FindInRepoByLocation(searchPhrase);
@@ -256,14 +260,14 @@ void Menu::AddRepoFile()
 	SetConsoleTitle(TEXT("RepoFinder - add a new repository file"));
 	clearConsole();
 	std::wstring fName, fDesc, fFilename, fLocation;
-	std::wcout << L"Insert filename: ";
-	std::wcin >> fFilename;
+	std::wcout << L"Insert system file name: ";
+	std::getline(std::wcin, fFilename);
 	std::wcout << L"Insert file description: ";
-	std::wcin >> fDesc;
-	std::wcout << L"Insert your filename (can contain spaces): ";
-	std::wcin >> fName;
+	std::getline(std::wcin, fDesc);
+	std::wcout << L"Insert user defined name: ";
+	std::getline(std::wcin, fName);
 	std::wcout << L"Insert file location: ";
-	std::wcin >> fLocation;
+	std::getline(std::wcin, fLocation);
 	RepoFile newPosition(fName, fDesc, fFilename, fLocation);
 	actualManager.AddToRepo(newPosition);
 	clearConsole();
@@ -354,7 +358,7 @@ void Menu::DeleteThroughSystemName()
 	clearConsole();
 	std::wstring searchPhrase;
 	std::wcout << L"Please enter specified file system name to delete: ";
-	std::wcin >> searchPhrase;
+	std::getline(std::wcin, searchPhrase);
 	clearConsole();
 	std::wcout << L"The results are: " << std::endl;
 	actualManager.DeleteFromRepoBySystemName(searchPhrase);
@@ -368,7 +372,7 @@ void Menu::DeleteThroughDescription()
 	clearConsole();
 	std::wstring searchPhrase;
 	std::wcout << L"Please enter specified file description to delete: ";
-	std::wcin >> searchPhrase;
+	std::getline(std::wcin, searchPhrase);
 	clearConsole();
 	std::wcout << L"The results are: " << std::endl;
 	actualManager.DeleteFromRepoByDesc(searchPhrase);
@@ -382,7 +386,7 @@ void Menu::DeleteThroughUserDefinedName()
 	clearConsole();
 	std::wstring searchPhrase;
 	std::wcout << L"Please enter specified file user defined name to delete: ";
-	std::wcin >> searchPhrase;
+	std::getline(std::wcin, searchPhrase);
 	clearConsole();
 	std::wcout << L"The results are: " << std::endl;
 	actualManager.DeleteFromRepoByUserDefinedName(searchPhrase);
@@ -396,7 +400,7 @@ void Menu::DeleteThroughLocation()
 	clearConsole();
 	std::wstring searchPhrase;
 	std::wcout << L"Please enter specified file location to delete: ";
-	std::wcin >> searchPhrase;
+	std::getline(std::wcin, searchPhrase);
 	clearConsole();
 	std::wcout << L"The results are: " << std::endl;
 	actualManager.DeleteFromRepoByLocation(searchPhrase);
@@ -408,8 +412,18 @@ void Menu::ShowAllFilesToDelete()
 {
 	SetConsoleTitle(TEXT("RepoFinder - delete a file from a full file list"));
 	clearConsole();
-	std::wcout << L"The results are: " << std::endl;
+	std::wcout << L"The actual file list is: " << std::endl;
 	actualManager.DeleteFromRepoWholeList();
+	std::wcout << std::endl << L"Please enter any key to continue.";
+	getch();
+}
+
+void Menu::EditRepoFile()
+{
+	SetConsoleTitle(TEXT("RepoFinder - edit a file from a full file list"));
+	clearConsole();
+	std::wcout << L"The actual file list is: " << std::endl;
+	actualManager.EditFileFromWholeList();
 	std::wcout << std::endl << L"Please enter any key to continue.";
 	getch();
 }
