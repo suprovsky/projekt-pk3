@@ -1,27 +1,40 @@
-#ifndef MENU_COKOLWIEK
-#define MENU_COKOLWIEK
+#ifndef MENU
+#define MENU
 #include <iostream>
 #include "repository.h"
-void clearConsole();
-class menu
+#include "repomanager.h"
+class Menu
 {
 public:
-	menu(repository& startRepo);
-	void ChangeRepoLocation(repository& inputRepo);
-	void IsRepositorySet(repository& inputRepo);
+	Menu(Repository& startRepo, RepoManager& startManager);
+	static void clearConsole();
+	void ChangeRepoLocation();
+	void IsRepositorySet();
+	void IsChangesUnsaved();
 	void GenerateMainOptions();
+	void GenerateSearchOptions();
+	void GenerateDeleteOptions();
 	void OpenMain();
-	void SyncLocation();
-	void FindISOFiles();
-	void ThroughSystemName();
-	void ThroughFilename();
-	void ThroughDescription();
-	void AddISOFiles();
+	void ShowAllFiles();
+	void FindRepoFiles();
+	void FindThroughSystemName();
+	void FindThroughUserDefinedName();
+	void FindThroughDescription();
+	void FindThroughLocation();
+	void AddRepoFile();
+	void DeleteRepoFile();
 	void SaveChanges();
 	void Help();
 	void About();
-	virtual ~menu();
+	void DeleteThroughSystemName();
+	void DeleteThroughDescription();
+	void DeleteThroughUserDefinedName();
+	void DeleteThroughLocation();
+	void ShowAllFilesToDelete();
+	void EditRepoFile();
+	virtual ~Menu();
 private:
-	repository& actualRepo;
+	Repository& actualRepo;
+	RepoManager& actualManager;
 };
 #endif
