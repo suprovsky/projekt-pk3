@@ -11,7 +11,7 @@ class Repository
 public:
 	Repository();
 	virtual ~Repository();
-	int firstRun();
+	int FirstRun();
 	void SetRepoLocation(std::wstring NewLocationAddress);
 	std::wstring GetRepoLocation();
 	void RepoStartup();

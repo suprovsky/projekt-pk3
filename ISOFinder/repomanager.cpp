@@ -340,38 +340,46 @@ void RepoManager::EditFileFromWholeList()
 			else compare = true;
 		} while (!(compare));
 		std::advance(listIter, selectedValue - 1); //deletedValue - 1, because list indexes starts from 0, not 1
-		ChangeSelectedValueInsideList(listIter);
+		ChangeSelectedValueInsideList(listIter);//method is too long; moving into another method
+		repoList.erase(listIter);//unchanged copy of the object is deleted
 		std::wcout << L"Done, file edited." << std::endl;
 		changesNotSaved = true;
 	}
 	else std::wcout << L"File repository is empty. There is nothing do edit." << std::endl;
 }
 
-void::RepoManager::ChangeSelectedValueInsideList(std::list<RepoFile>::iterator inputIterator)
+void::RepoManager::ChangeSelectedValueInsideList(std::list<RepoFile>::iterator iIter)
 {
+	std::vector<int> availableValues = { 1,2,3,4 };
 	std::wstring editedValue;
-	std::getline(std::wcin, editedValue);
+	RepoFile replacedFile(iIter->GetSystemName(), iIter->GetFileDesc(), iIter->GetUserDefinedName(), iIter->GetFileLocation());
 	std::wcout << L"Select edited value type: (1) System filename, (2) File description, (3) User defined filename, (4) file location" << std::endl;
-	wchar_t selectedOption = '0';
-	do
-	{
-		selectedOption = getch();
-		switch (selectedOption)
-		{
-		case '1':
-			inputIterator->SetSystemName(editedValue);
-			break;
-		case '2':
-			inputIterator->SetFileDesc(editedValue);
-			break;
-		case '3':
-			inputIterator->SetUserDefinedName(editedValue);
-			break;
-		case '4':
-			inputIterator->SetFileLocation(editedValue);
-			break;
-		default:
-			break;
+	int selectedValue = 0;
+	bool compare = false;
+	do {
+		std::wcin >> selectedValue;
+		ValueChecker::IfInt();
+		if (!(std::find(availableValues.begin(), availableValues.end(), selectedValue) != availableValues.end())) {
+			std::wcout << L"Value out of range. Please enter object index again: ";
 		}
-	} while (selectedOption != '0');
+		else compare = true;
+	} while (!(compare));
+	std::wcout << L"Please enter the value you want to edit: ";
+	std::wcin >> editedValue;
+		switch (selectedValue)
+		{
+	case 1:
+		replacedFile.SetSystemName(editedValue);
+		break;
+	case 2:
+		replacedFile.SetFileDesc(editedValue);
+		break;
+	case 3:
+		replacedFile.SetUserDefinedName(editedValue);
+		break;
+	case 4:
+		replacedFile.SetFileLocation(editedValue);
+		break;
+		}
+	repoList.push_back(replacedFile);//changed copy of the object is added to the list
 }

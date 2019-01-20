@@ -13,11 +13,10 @@
 
 int main()
 {
-	_setmode(_fileno(stdout), _O_U16TEXT);
-	_setmode(_fileno(stderr), _O_U16TEXT);
+	_setmode(_fileno(stdout), _O_U16TEXT);//turns on UTF-16 support for wide characters in stdout
+	_setmode(_fileno(stderr), _O_U16TEXT);//and in stderr as well
 	Repository repo;
 	RepoManager firstInstance;
-	repo.RepoStartup();
 	Menu NewMenu(repo, firstInstance);
 	NewMenu.OpenMain();
 	return 0;

@@ -8,6 +8,7 @@
 Repository::Repository()
 {
 	RepoLocation = L"-";
+	RepoStartup();
 }
 
 
@@ -15,7 +16,7 @@ Repository::~Repository()
 {
 }
 
-int Repository::firstRun()
+int Repository::FirstRun()
 {
 	std::wstring path;
 	std::wofstream file;
@@ -68,6 +69,6 @@ void Repository::RepoStartup()
 	}
 	else
 	{
-		firstRun();
+		FirstRun();
 	}
 }

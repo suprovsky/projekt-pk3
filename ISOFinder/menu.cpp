@@ -271,14 +271,14 @@ void Menu::AddRepoFile()
 	clearConsole();
 	std::wstring fSystemName, fDesc, fUserDefinedName, fLocation;
 	std::wcout << L"Insert system file name: ";
-	std::getline(std::wcin, fSystemName);
+	std::wcin >> fSystemName;
 	std::wcout << L"Insert file description: ";
-	std::getline(std::wcin, fDesc);
+	std::wcin >> fDesc;
 	std::wcout << L"Insert user defined name: ";
-	std::getline(std::wcin, fUserDefinedName);
+	std::wcin >> fUserDefinedName;
 	std::wcout << L"Insert file location: ";
-	std::getline(std::wcin, fLocation);
-	RepoFile newPosition(fSystemName, fUserDefinedName, fLocation, fDesc);
+	std::wcin >> fLocation;
+	RepoFile newPosition(fSystemName, fDesc, fUserDefinedName, fLocation);
 	actualManager.AddToRepo(newPosition);
 	clearConsole();
 	std::wcout << L"You have added a new file with following data: " << std::endl;
@@ -443,8 +443,15 @@ void Menu::EditRepoFile()
 {
 	SetConsoleTitle(TEXT("RepoFinder - edit a file from a full file list"));
 	clearConsole();
-	std::wcout << L"The actual file list is: " << std::endl;
-	actualManager.EditFileFromWholeList();
+	if (actualManager.IsRepoEmpty())
+	{
+		std::wcout << L"The actual list is empty. There is nothing to edit." << std::endl;
+	}
+	else
+	{
+		std::wcout << L"The actual file list is: " << std::endl;
+		actualManager.EditFileFromWholeList();
+	}
 	std::wcout << std::endl << L"Please enter any key to continue.";
 	getch();
 }
