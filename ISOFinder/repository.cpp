@@ -8,6 +8,7 @@
 Repository::Repository()
 {
 	RepoLocation = L"-";
+	RepoStartup();
 }
 
 
