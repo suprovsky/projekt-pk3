@@ -41,6 +41,12 @@ void RepoManager::ShowAllFiles()
 
 }
 
+bool RepoManager::IsRepoEmpty()
+{
+	if (repoList.empty()) return true;
+	else return false;
+}
+
 void RepoManager::FindInRepoBySystemName(std::wstring inputName)
 {
 	for (auto x : repoList)

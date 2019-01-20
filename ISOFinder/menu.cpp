@@ -170,33 +170,43 @@ void Menu::ShowAllFiles()
 
 void Menu::FindRepoFiles()
 {
-	wchar_t selectedOption = '0';
-	do
+	if (actualManager.IsRepoEmpty())
 	{
 		clearConsole();
-		GenerateSearchOptions();
-		selectedOption = getch();
-		switch (selectedOption)
+		std::wcout << L"The actual list is empty. There is nothing to search." << std::endl;
+		std::wcout << std::endl << std::endl << "Press any key to continue.";
+		getch();
+	}
+	else
+	{
+		wchar_t selectedOption = '0';
+		do
 		{
-		case '1':
-			FindThroughSystemName();
-			break;
-		case '2':
-			FindThroughDescription();
-			break;
-		case '3':
-			FindThroughUserDefinedName();
-			break;
-		case '4':
-			FindThroughLocation();
-			break;
-		case '5':
-			OpenMain();
-			break;
-		default:
-			break;
-		}
-	} while (selectedOption != '0');
+			clearConsole();
+			GenerateSearchOptions();
+			selectedOption = getch();
+			switch (selectedOption)
+			{
+			case '1':
+				FindThroughSystemName();
+				break;
+			case '2':
+				FindThroughDescription();
+				break;
+			case '3':
+				FindThroughUserDefinedName();
+				break;
+			case '4':
+				FindThroughLocation();
+				break;
+			case '5':
+				OpenMain();
+				break;
+			default:
+				break;
+			}
+		} while (selectedOption != '0');
+	}
 }
 
 void Menu::FindThroughSystemName()
@@ -259,16 +269,16 @@ void Menu::AddRepoFile()
 {
 	SetConsoleTitle(TEXT("RepoFinder - add a new repository file"));
 	clearConsole();
-	std::wstring fName, fDesc, fFilename, fLocation;
+	std::wstring fSystemName, fDesc, fUserDefinedName, fLocation;
 	std::wcout << L"Insert system file name: ";
-	std::getline(std::wcin, fFilename);
+	std::getline(std::wcin, fSystemName);
 	std::wcout << L"Insert file description: ";
 	std::getline(std::wcin, fDesc);
 	std::wcout << L"Insert user defined name: ";
-	std::getline(std::wcin, fName);
+	std::getline(std::wcin, fUserDefinedName);
 	std::wcout << L"Insert file location: ";
 	std::getline(std::wcin, fLocation);
-	RepoFile newPosition(fName, fDesc, fFilename, fLocation);
+	RepoFile newPosition(fSystemName, fUserDefinedName, fLocation, fDesc);
 	actualManager.AddToRepo(newPosition);
 	clearConsole();
 	std::wcout << L"You have added a new file with following data: " << std::endl;
@@ -279,36 +289,47 @@ void Menu::AddRepoFile()
 
 void Menu::DeleteRepoFile()
 {
-	wchar_t selectedOption = '0';
-	do
+	if (actualManager.IsRepoEmpty())
 	{
 		clearConsole();
-		GenerateDeleteOptions();
-		selectedOption = getch();
-		switch (selectedOption)
+		std::wcout << L"The actual list is empty. There is nothing to delete." << std::endl;
+		std::wcout << std::endl << std::endl << "Press any key to continue.";
+		getch();
+	}
+	else
+	{
+		wchar_t selectedOption = '0';
+		do
 		{
-		case '1':
-			DeleteThroughSystemName();
-			break;
-		case '2':
-			DeleteThroughDescription();
-			break;
-		case '3':
-			DeleteThroughUserDefinedName();
-			break;
-		case '4':
-			DeleteThroughLocation();
-			break;
-		case '5':
-			ShowAllFilesToDelete();
-			break;
-		case '6':
-			OpenMain();
-			break;
-		default:
-			break;
-		}
-	} while (selectedOption != '0');
+			clearConsole();
+			GenerateDeleteOptions();
+			selectedOption = getch();
+			switch (selectedOption)
+			{
+			case '1':
+				DeleteThroughSystemName();
+				break;
+			case '2':
+				DeleteThroughDescription();
+				break;
+			case '3':
+				DeleteThroughUserDefinedName();
+				break;
+			case '4':
+				DeleteThroughLocation();
+				break;
+			case '5':
+				ShowAllFilesToDelete();
+				break;
+			case '6':
+				OpenMain();
+				break;
+			default:
+				break;
+			}
+		} while (selectedOption != '0');
+	}
+
 }
 
 void Menu::SaveChanges()
