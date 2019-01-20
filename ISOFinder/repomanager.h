@@ -16,6 +16,7 @@ public:
 	virtual ~RepoManager();
 	void AddToRepo(RepoFile& inputRepoFile);
 	void ShowAllFiles();
+	bool IsRepoEmpty();
 	void FindInRepoBySystemName(std::wstring inputName);
 	void FindInRepoByDesc(std::wstring inputDesc);
 	void FindInRepoByUserDefinedName(std::wstring inputFileName);

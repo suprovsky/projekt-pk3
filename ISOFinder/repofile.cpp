@@ -7,15 +7,15 @@ RepoFile::RepoFile()
 	fileLocation = L"./";
 }
 
-RepoFile::RepoFile(std::wstring name, std::wstring filename, std::wstring filelock, std::wstring filedesc)
+RepoFile::RepoFile(std::wstring inputSystemName, std::wstring inputFileDesc, std::wstring inputUserDefinedName, std::wstring inputFileLocation)
 {
-	fileSystemName = name;
-	fileUserDefinedName = filename;
-	fileLocation = filelock;
-	fileDescription = filedesc;
+	fileSystemName = inputSystemName;
+	fileUserDefinedName = inputUserDefinedName;
+	fileLocation = inputFileLocation;
+	fileDescription = inputFileDesc;
 }
 
-RepoFile::RepoFile(const std::wstring NewISOlocation = L"./") : fileLocation(NewISOlocation)
+RepoFile::RepoFile(const std::wstring NewFileLocation = L"./") : fileLocation(NewFileLocation)
 {
 }
 
@@ -24,9 +24,9 @@ RepoFile::~RepoFile()
 {
 }
 
-void RepoFile::SetSystemName(std::wstring NewISOname)
+void RepoFile::SetSystemName(std::wstring newSystemName)
 {
-	fileSystemName = NewISOname;
+	fileSystemName = newSystemName;
 }
 
 std::wstring RepoFile::GetSystemName()
@@ -34,9 +34,9 @@ std::wstring RepoFile::GetSystemName()
 	return fileSystemName;
 }
 
-void RepoFile::SetUserDefinedName(std::wstring NewISOfilename)
+void RepoFile::SetUserDefinedName(std::wstring newUserDefinedName)
 {
-	fileUserDefinedName = NewISOfilename;
+	fileUserDefinedName = newUserDefinedName;
 }
 
 std::wstring RepoFile::GetUserDefinedName()
@@ -44,9 +44,9 @@ std::wstring RepoFile::GetUserDefinedName()
 	return fileUserDefinedName;
 }
 
-void RepoFile::SetFileDesc(std::wstring NewISOdesc)
+void RepoFile::SetFileDesc(std::wstring newFileDesc)
 {
-	fileDescription = NewISOdesc;
+	fileDescription = newFileDesc;
 }
 
 std::wstring RepoFile::GetFileDesc()
@@ -54,9 +54,9 @@ std::wstring RepoFile::GetFileDesc()
 	return fileDescription;
 }
 
-void RepoFile::SetFileLocation(std::wstring NewISOlocation)
+void RepoFile::SetFileLocation(std::wstring newFileLocation)
 {
-	fileLocation = NewISOlocation;
+	fileLocation = newFileLocation;
 }
 
 std::wstring RepoFile::GetFileLocation()

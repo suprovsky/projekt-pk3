@@ -8,16 +8,16 @@ class RepoFile :
 {
 public:
 	RepoFile();
-	RepoFile(std::wstring name, std::wstring filename, std::wstring filelock, std::wstring filedesc);
+	RepoFile(std::wstring inputSystemName, std::wstring inputUserDefinedName, std::wstring inputFileLocation, std::wstring inputFileDesc);
 	RepoFile(std::wstring newFileLocation);
 	virtual ~RepoFile();
-	void SetSystemName(std::wstring newFileName);
+	void SetSystemName(std::wstring newSystemName);
 	std::wstring GetSystemName();
-	void SetUserDefinedName(std::wstring newFileFileName);
+	void SetUserDefinedName(std::wstring newUserDefinedName);
 	std::wstring GetUserDefinedName();
-	void SetFileDesc(std::wstring newFiledesc);
+	void SetFileDesc(std::wstring newFileDesc);
 	std::wstring GetFileDesc();
-	void SetFileLocation(std::wstring newFilelocation);
+	void SetFileLocation(std::wstring newFileLocation);
 	std::wstring GetFileLocation();
 	RepoFile& operator=(RepoFile &right);
 	friend std::wostream& operator<<(std::wostream& output, RepoFile& right);
