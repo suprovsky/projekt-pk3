@@ -443,8 +443,15 @@ void Menu::EditRepoFile()
 {
 	SetConsoleTitle(TEXT("RepoFinder - edit a file from a full file list"));
 	clearConsole();
-	std::wcout << L"The actual file list is: " << std::endl;
-	actualManager.EditFileFromWholeList();
+	if (actualManager.IsRepoEmpty())
+	{
+		std::wcout << L"The actual list is empty. There is nothing to edit." << std::endl;
+	}
+	else
+	{
+		std::wcout << L"The actual file list is: " << std::endl;
+		actualManager.EditFileFromWholeList();
+	}
 	std::wcout << std::endl << L"Please enter any key to continue.";
 	getch();
 }
