@@ -271,13 +271,13 @@ void Menu::AddRepoFile()
 	clearConsole();
 	std::wstring fSystemName, fDesc, fUserDefinedName, fLocation;
 	std::wcout << L"Insert system file name: ";
-	std::getline(std::wcin, fSystemName);
+	std::wcin >> fSystemName;
 	std::wcout << L"Insert file description: ";
-	std::getline(std::wcin, fDesc);
+	std::wcin >> fDesc;
 	std::wcout << L"Insert user defined name: ";
-	std::getline(std::wcin, fUserDefinedName);
+	std::wcin >> fUserDefinedName;
 	std::wcout << L"Insert file location: ";
-	std::getline(std::wcin, fLocation);
+	std::wcin >> fLocation;
 	RepoFile newPosition(fSystemName, fDesc, fUserDefinedName, fLocation);
 	actualManager.AddToRepo(newPosition);
 	clearConsole();
