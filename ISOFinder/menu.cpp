@@ -278,7 +278,7 @@ void Menu::AddRepoFile()
 	std::getline(std::wcin, fUserDefinedName);
 	std::wcout << L"Insert file location: ";
 	std::getline(std::wcin, fLocation);
-	RepoFile newPosition(fSystemName, fUserDefinedName, fLocation, fDesc);
+	RepoFile newPosition(fSystemName, fDesc, fUserDefinedName, fLocation);
 	actualManager.AddToRepo(newPosition);
 	clearConsole();
 	std::wcout << L"You have added a new file with following data: " << std::endl;

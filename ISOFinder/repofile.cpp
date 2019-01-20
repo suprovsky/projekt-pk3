@@ -10,9 +10,10 @@ RepoFile::RepoFile()
 RepoFile::RepoFile(std::wstring inputSystemName, std::wstring inputFileDesc, std::wstring inputUserDefinedName, std::wstring inputFileLocation)
 {
 	fileSystemName = inputSystemName;
+	fileDescription = inputFileDesc;
 	fileUserDefinedName = inputUserDefinedName;
 	fileLocation = inputFileLocation;
-	fileDescription = inputFileDesc;
+
 }
 
 RepoFile::RepoFile(const std::wstring NewFileLocation = L"./") : fileLocation(NewFileLocation)
