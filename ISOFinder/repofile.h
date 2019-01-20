@@ -9,7 +9,6 @@ class RepoFile :
 public:
 	RepoFile();
 	RepoFile(std::wstring inputSystemName, std::wstring inputUserDefinedName, std::wstring inputFileLocation, std::wstring inputFileDesc);
-	RepoFile(std::wstring newFileLocation);
 	virtual ~RepoFile();
 	void SetSystemName(std::wstring newSystemName);
 	std::wstring GetSystemName();

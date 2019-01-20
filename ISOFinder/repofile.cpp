@@ -16,9 +16,6 @@ RepoFile::RepoFile(std::wstring inputSystemName, std::wstring inputFileDesc, std
 
 }
 
-RepoFile::RepoFile(const std::wstring NewFileLocation = L"./") : fileLocation(NewFileLocation)
-{
-}
 
 
 RepoFile::~RepoFile()
